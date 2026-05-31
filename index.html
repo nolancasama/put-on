@@ -199,12 +199,62 @@ header p {
   inset: 0;
 }
 
+.grass-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.grass-strip svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .character-slot {
   position: absolute;
   left: 10px;
   bottom: 34px;
   width: clamp(200px, 30vw, 300px);
   transform: translateX(0);
+  z-index: 2;
+}
+
+.character-bubble {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, calc(-100% - 12px));
+  min-width: 160px;
+  max-width: 260px;
+  padding: 11px 16px;
+  border-radius: 16px;
+  background: white;
+  border: 2.5px solid var(--accent);
+  box-shadow: 0 8px 20px rgba(43, 49, 71, 0.16);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 800;
+  white-space: nowrap;
+  z-index: 6;
+  color: var(--ink);
+}
+
+.character-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 15px;
+  height: 15px;
+  background: white;
+  border-right: 2.5px solid var(--accent);
+  border-bottom: 2.5px solid var(--accent);
 }
 
 .character-canvas svg {
@@ -690,7 +740,15 @@ header p {
 
     <div class="stage-wrap">
       <div class="walk-track" id="walk-track">
+        <div class="grass-strip" aria-hidden="true">
+          <svg viewBox="0 0 100 72" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <rect y="28" width="100" height="44" fill="#3c7a1e"/>
+            <path d="M0,28 C3,10 6,6 9,26 C12,8 15,3 18,26 C21,11 24,6 27,28 C30,9 33,4 36,26 C39,12 42,7 45,28 C48,8 51,2 54,26 C57,10 60,5 63,28 C66,9 69,4 72,26 C75,12 78,7 81,28 C84,8 87,2 90,26 C93,10 96,5 99,28 L100,28 L100,72 L0,72 Z" fill="#5bb32e"/>
+            <path d="M4,26 C6,14 8,10 10,24 C15,9 17,5 19,24 C24,12 26,8 28,26 C33,10 36,6 38,24 C43,13 45,9 47,26 C52,9 55,4 57,24 C61,12 64,8 66,26 C71,10 74,6 76,24 L100,24 L100,72 L0,72 Z" fill="#7ed44a" opacity="0.55"/>
+          </svg>
+        </div>
         <div class="character-slot" id="character-slot">
+          <div class="character-bubble" id="character-bubble" hidden></div>
           <div class="character-canvas" id="character-canvas"></div>
         </div>
       </div>
@@ -1649,6 +1707,7 @@ const selector = document.getElementById('character-selector');
 const grid = document.getElementById('clothing-grid');
 let sayBubbleTimerId = null;
 const speechBubble = document.getElementById('stage-speech');
+const characterBubble = document.getElementById('character-bubble');
 const characterCanvas = document.getElementById('character-canvas');
 const characterSlot = document.getElementById('character-slot');
 const walkTrack = document.getElementById('walk-track');
@@ -2387,6 +2446,15 @@ function hideBubble() {
   speechBubble.hidden = true;
 }
 
+function showCharacterBubble(text) {
+  characterBubble.textContent = text;
+  characterBubble.hidden = false;
+}
+
+function hideCharacterBubble() {
+  characterBubble.hidden = true;
+}
+
 function askWhat() {
   say('What?');
   speak('What?');
@@ -2614,7 +2682,7 @@ function handleFinish(bubbleText) {
   celebrationMode = true;
   setInteractionEnabled(false);
   const finishSpeech = bubbleText || buildFinishSpeech();
-  showBubble(finishSpeech);
+  showCharacterBubble(finishSpeech);
   updateMouth('ready');
 
   const wearSentence = buildWearSentence();
@@ -2643,6 +2711,7 @@ function finishCelebration() {
   const finalDistance = characterSlot.style.getPropertyValue('--walk-distance') || '0px';
   characterSlot.classList.remove('walking');
   characterSlot.style.transform = `translateX(${finalDistance})`;
+  hideCharacterBubble();
   setAwaitingRoundReset(true);
   say(UI_TEXT.clickAnywhere);
 }
@@ -2656,6 +2725,7 @@ function startNewRound() {
   characterSlot.style.transform = 'translateX(0)';
   characterSlot.style.removeProperty('--walk-distance');
   hideBubble();
+  hideCharacterBubble();
   clearConfetti();
   clearOutfit({ rerender: true });
   resetSpeechFeedback();
