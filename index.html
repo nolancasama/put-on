@@ -1833,9 +1833,11 @@ function initializeSpeechControls() {
     recognitionActive = true;
     microphonePermissionPrimed = true;
     keepRecognitionRunning = true;
-    micButton.classList.add('listening');
-    micLabel.textContent = UI_TEXT.listening;
-    recognizedValue.textContent = UI_TEXT.listening;
+    if (isListening) {
+      micButton.classList.add('listening');
+      micLabel.textContent = UI_TEXT.listening;
+      recognizedValue.textContent = UI_TEXT.listening;
+    }
   };
 
   recognition.onresult = (event) => {
@@ -1890,13 +1892,13 @@ function initializeSpeechControls() {
   recognition.onend = () => {
     recognitionActive = false;
 
-    if (keepRecognitionRunning) {
-      try { recognition.start(); } catch (_) {}
+    if (shouldKeepRecognitionAlive()) {
+      scheduleRecognitionRestart(180);
       return;
     }
 
-    if (shouldKeepRecognitionAlive()) {
-      scheduleRecognitionRestart(180);
+    if (keepRecognitionRunning && !isListening) {
+      try { recognition.start(); } catch (_) {}
       return;
     }
 
