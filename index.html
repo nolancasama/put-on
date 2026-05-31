@@ -1709,7 +1709,6 @@ function buildShoeContent(variantIndex, partId) {
 
 let currentCharacter = CHARACTERS[0].id;
 let worn = new Set();
-let soundOn = true;
 let audioCtx = null;
 let mouth = null;
 let sparkles = null;
@@ -1773,9 +1772,7 @@ resetButton.addEventListener('click', () => {
   clearOutfit({ rerender: true });
   resetSpeechFeedback();
   say(UI_TEXT.resetPrompt);
-  if (soundOn) {
-    tone(330);
-  }
+  tone(330);
 });
 
 micButton.addEventListener('click', handleMicButtonClick);
@@ -2179,9 +2176,7 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
   const successMessage = `いいね！${item.label}を つけたよ。`;
   say(successMessage);
-  if (soundOn) {
-    tone(680);
-  }
+  tone(680);
   return true;
 }
 
@@ -2322,7 +2317,7 @@ function toggleItem(item, options = {}) {
     if (announce) {
       say(item.takeOff);
     }
-    if (audioFeedback && soundOn) {
+    if (audioFeedback) {
       tone(360);
       speak(item.speakTakeOff || item.takeOff);
     }
@@ -2342,7 +2337,7 @@ function toggleItem(item, options = {}) {
     if (announce) {
       say(item.putOn);
     }
-    if (audioFeedback && soundOn) {
+    if (audioFeedback) {
       tone(680);
       speak(item.speakPutOn || item.putOn);
     }
@@ -2659,10 +2654,8 @@ function handleFinish(bubbleText) {
     finishButton.classList.remove('alert');
     void finishButton.offsetWidth;
     finishButton.classList.add('alert');
-    if (soundOn) {
-      tone(240);
-      speak(SPEECH_TEXT.emptyFinish);
-    }
+    tone(240);
+    speak(SPEECH_TEXT.emptyFinish);
     return;
   }
 
@@ -2677,10 +2670,8 @@ function handleFinish(bubbleText) {
   say(wearSentence);
   spawnConfetti();
 
-  if (soundOn) {
-    tone(780);
-    speak(finishSpeech);
-  }
+  tone(780);
+  speak(finishSpeech);
 
   characterSlot.classList.add('waving');
   queueTask(() => {
