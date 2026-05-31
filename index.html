@@ -1366,7 +1366,7 @@ const CHARACTERS = [
       <ellipse cx='41' cy='15' rx='3.5' ry='2.5' fill='white'/>
       <circle cx='13' cy='31' r='5.5' fill='#f96fad' opacity='0.7'/>
       <circle cx='51' cy='31' r='5.5' fill='#f96fad' opacity='0.7'/>
-      <path d='M26 38 Q32 45 38 38' stroke='#c04878' stroke-width='2' fill='none' stroke-linecap='round'/>
+      <path d='M26 43 Q32 50 38 43' stroke='#c04878' stroke-width='2' fill='none' stroke-linecap='round'/>
     </svg>`,
   },
 ];
@@ -1462,12 +1462,18 @@ function buildItemButtonMarkup(item) {
 }
 
 function refreshClothingButtons() {
+  const isKirby = currentCharacter === 'kirby';
   ITEMS.forEach((item) => {
     const button = grid.querySelector(`[data-id='${item.id}']`);
     if (!button) {
       return;
     }
 
+    if (isKirby && (item.id === 'shirt' || item.id === 'jacket')) {
+      button.style.display = 'none';
+      return;
+    }
+    button.style.display = '';
     button.innerHTML = buildItemButtonMarkup(item);
     const active = worn.has(item.id);
     button.classList.toggle('worn', active);
@@ -1517,14 +1523,16 @@ function buildVariantContent(itemId, variantIndex, partId, mode = 'shared') {
     case 'hat':
       return buildHatContent(variantIndex);
     case 'shirt':
-      if (partId === 'clothing-shirt-sleeve-left') return (mode === 'kirby') ? '' : buildShirtSleeveLeftContent(variantIndex);
-      if (partId === 'clothing-shirt-sleeve-right') return (mode === 'kirby') ? '' : buildShirtSleeveRightContent(variantIndex);
-      if (mode === 'robot' || mode === 'kirby') return buildShirtBodyContent(variantIndex);
+      if (mode === 'kirby') return '';
+      if (partId === 'clothing-shirt-sleeve-left') return buildShirtSleeveLeftContent(variantIndex);
+      if (partId === 'clothing-shirt-sleeve-right') return buildShirtSleeveRightContent(variantIndex);
+      if (mode === 'robot') return buildShirtBodyContent(variantIndex);
       return buildShirtContent(variantIndex);
     case 'jacket':
-      if (partId === 'clothing-jacket-sleeve-left') return (mode === 'kirby') ? '' : buildJacketSleeveLeftContent(variantIndex);
-      if (partId === 'clothing-jacket-sleeve-right') return (mode === 'kirby') ? '' : buildJacketSleeveRightContent(variantIndex);
-      if (mode === 'robot' || mode === 'kirby') return buildJacketBodyContent(variantIndex);
+      if (mode === 'kirby') return '';
+      if (partId === 'clothing-jacket-sleeve-left') return buildJacketSleeveLeftContent(variantIndex);
+      if (partId === 'clothing-jacket-sleeve-right') return buildJacketSleeveRightContent(variantIndex);
+      if (mode === 'robot') return buildJacketBodyContent(variantIndex);
       return buildJacketContent(variantIndex);
     case 'glasses':
       return buildGlassesContent(variantIndex);
@@ -3995,7 +4003,7 @@ const CHARACTER_SVGS = {
       <ellipse cx='150' cy='76' rx='10' ry='7' fill='white'/>
       <circle cx='68' cy='118' r='16' fill='#f96fad' opacity='0.7'/>
       <circle cx='172' cy='118' r='16' fill='#f96fad' opacity='0.7'/>
-      <path id='character-mouth' d='M 106 152 Q 120 168 134 152' stroke='#c04878' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+      <path id='character-mouth' d='M 108 172 Q 120 188 132 172' stroke='#c04878' stroke-width='3.5' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
     ${CLOTHING.hat}`,
