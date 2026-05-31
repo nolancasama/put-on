@@ -282,13 +282,6 @@ header p {
 }
 
 .ctrl-btn,
-.finish-btn {
-  font: inherit;
-  font-weight: 800;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.14s ease;
-}
 
 .ctrl-btn {
   padding: 12px 18px;
@@ -296,8 +289,7 @@ header p {
   color: var(--ink);
 }
 
-.ctrl-btn:hover:not(:disabled),
-.finish-btn:hover:not(:disabled) {
+.ctrl-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 18px rgba(43, 49, 71, 0.16);
 }
@@ -440,25 +432,22 @@ header p {
   color: var(--ink);
 }
 
-.finish-btn {
+.lets-hint {
   width: 100%;
-  padding: 18px 20px;
+  padding: 14px 20px;
   border-radius: 22px;
-  font-size: 1.15rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  background: #f0f4ff;
+  color: #5b6fa6;
+  border: 2px dashed #b0bcde;
+  box-sizing: border-box;
 }
 
-.finish-btn {
-  background: linear-gradient(135deg, var(--accent) 0%, #ff9068 100%);
-  color: white;
-}
-
-.finish-btn:disabled {
-  cursor: default;
-  opacity: 0.72;
-}
-
-.finish-btn.alert {
-  animation: finish-alert 0.4s ease;
+.lets-hint em {
+  font-style: normal;
+  color: var(--accent);
 }
 
 footer {
@@ -565,20 +554,6 @@ footer {
   pointer-events: none;
 }
 
-@keyframes finish-alert {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-5px);
-  }
-
-  75% {
-    transform: translateX(5px);
-  }
-}
 
 @keyframes voice-hit {
   0%,
@@ -809,7 +784,7 @@ footer {
       </button>
     </div>
 
-    <button class="finish-btn" id="btn-finish">できあがり</button>
+    <div class="lets-hint">Say <em>"Let's …"</em> to finish!</div>
     <div class="recognized-text" id="recognized-text" aria-live="polite"><strong>きこえた ことば:</strong> <span id="recognized-value">まだありません。</span></div>
   </section>
 </main>
@@ -1709,7 +1684,6 @@ function buildShoeContent(variantIndex, partId) {
 
 let currentCharacter = CHARACTERS[0].id;
 let worn = new Set();
-let soundOn = true;
 let audioCtx = null;
 let mouth = null;
 let sparkles = null;
@@ -1745,7 +1719,6 @@ const resetButton = document.getElementById('btn-reset');
 const micButton = document.getElementById('btn-mic');
 const micLabel = document.getElementById('mic-label');
 const recognizedValue = document.getElementById('recognized-value');
-const finishButton = document.getElementById('btn-finish');
 const roundResetOverlay = document.getElementById('round-reset-overlay');
 const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
 const speechSupported = Boolean(SpeechRecognitionCtor);
@@ -1774,13 +1747,10 @@ resetButton.addEventListener('click', () => {
   clearOutfit({ rerender: true });
   resetSpeechFeedback();
   say(UI_TEXT.resetPrompt);
-  if (soundOn) {
-    tone(330);
-  }
+  tone(330);
 });
 
 micButton.addEventListener('click', handleMicButtonClick);
-finishButton.addEventListener('click', () => handleFinish());
 roundResetOverlay.addEventListener('click', startNewRound);
 
 characterSlot.addEventListener('animationend', (event) => {
@@ -2054,9 +2024,13 @@ function finalizeSpeechSession() {
   micButton.classList.remove('listening');
   micLabel.textContent = UI_TEXT.tapToSpeak;
 
-  if (speechStopReason === 'timeout' && !speechSessionHadResult && !speechSessionHandled) {
-    recognizedValue.textContent = UI_TEXT.tryAgain;
-    say(UI_TEXT.tryAgain);
+  if (speechStopReason === 'timeout') {
+    if (worn.size > 0) {
+      handleFinish();
+    } else if (!speechSessionHadResult && !speechSessionHandled) {
+      recognizedValue.textContent = UI_TEXT.tryAgain;
+      say(UI_TEXT.tryAgain);
+    }
   }
 
   speechStopReason = null;
@@ -2184,9 +2158,7 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
   const successMessage = `いいね！${item.label}を つけたよ。`;
   say(successMessage);
-  if (soundOn) {
-    tone(680);
-  }
+  tone(680);
   return true;
 }
 
@@ -2245,10 +2217,8 @@ function handleItemCardClick(item) {
 
   flashItemButton(item.id);
   say(item.cardLabel);
-  if (soundOn) {
-    tone(520);
-    speak(item.cardLabel);
-  }
+  tone(520);
+  speak(item.cardLabel);
 }
 
 function chooseCharacter(characterId) {
@@ -2358,9 +2328,9 @@ function toggleItem(item, options = {}) {
     if (announce) {
       say(item.takeOff);
     }
-    if (audioFeedback && soundOn) {
+    if (audioFeedback) {
       tone(360);
-      speak(item.speakTakeOff || item.takeOff);
+      speak(item.cardLabel);
     }
   } else {
     worn.add(item.id);
@@ -2378,9 +2348,9 @@ function toggleItem(item, options = {}) {
     if (announce) {
       say(item.putOn);
     }
-    if (audioFeedback && soundOn) {
+    if (audioFeedback) {
       tone(680);
-      speak(item.speakPutOn || item.putOn);
+      speak(item.cardLabel);
     }
   }
 
@@ -2484,9 +2454,7 @@ function askWhat() {
   window.clearTimeout(questionBubbleTimeoutId);
   showBubble('What?');
   say('What?');
-  if (soundOn) {
-    speak('What?');
-  }
+  speak('What?');
   questionBubbleTimeoutId = window.setTimeout(() => {
     if (!celebrationMode && speechBubble.textContent === 'What?') {
       hideBubble();
@@ -2693,7 +2661,6 @@ function setInteractionEnabled(enabled) {
   });
   resetButton.disabled = !enabled;
   micButton.disabled = !enabled || !speechSupported;
-  finishButton.disabled = !enabled;
 }
 
 function handleFinish(bubbleText) {
@@ -2706,13 +2673,8 @@ function handleFinish(bubbleText) {
 
   if (worn.size === 0) {
     say(UI_TEXT.emptyFinish);
-    finishButton.classList.remove('alert');
-    void finishButton.offsetWidth;
-    finishButton.classList.add('alert');
-    if (soundOn) {
-      tone(240);
-      speak(SPEECH_TEXT.emptyFinish);
-    }
+    tone(240);
+    speak(SPEECH_TEXT.emptyFinish);
     return;
   }
 
@@ -2727,10 +2689,8 @@ function handleFinish(bubbleText) {
   say(wearSentence);
   spawnConfetti();
 
-  if (soundOn) {
-    tone(780);
-    speak(finishSpeech);
-  }
+  tone(780);
+  speak(finishSpeech);
 
   characterSlot.classList.add('waving');
   queueTask(() => {
