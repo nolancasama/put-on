@@ -1362,15 +1362,11 @@ const CHARACTERS = [
       <circle cx='32' cy='26' r='22' fill='#ff8dc8'/>
       <ellipse cx='23' cy='21' rx='6' ry='7.5' fill='#1c2535'/>
       <ellipse cx='41' cy='21' rx='6' ry='7.5' fill='#1c2535'/>
-      <ellipse cx='23' cy='21.5' rx='3.5' ry='5' fill='#3fc5e8'/>
-      <ellipse cx='41' cy='21.5' rx='3.5' ry='5' fill='#3fc5e8'/>
-      <ellipse cx='23' cy='22.5' rx='2' ry='3' fill='#1c2535'/>
-      <ellipse cx='41' cy='22.5' rx='2' ry='3' fill='#1c2535'/>
-      <circle cx='26' cy='17' r='1.8' fill='white'/>
-      <circle cx='44' cy='17' r='1.8' fill='white'/>
+      <ellipse cx='23' cy='15' rx='3.5' ry='2.5' fill='white'/>
+      <ellipse cx='41' cy='15' rx='3.5' ry='2.5' fill='white'/>
       <circle cx='13' cy='31' r='5.5' fill='#f96fad' opacity='0.7'/>
       <circle cx='51' cy='31' r='5.5' fill='#f96fad' opacity='0.7'/>
-      <path d='M26 35 Q32 42 38 35' stroke='#c04878' stroke-width='2' fill='none' stroke-linecap='round'/>
+      <path d='M26 38 Q32 45 38 38' stroke='#c04878' stroke-width='2' fill='none' stroke-linecap='round'/>
     </svg>`,
   },
 ];
@@ -1384,6 +1380,7 @@ const CLOTHING_SLOTS = {
     baseHeight: 40,
     shared: { default: { x: 62, y: -14, width: 116, height: 72 } },
     robot: { default: { x: 42, y: -32, width: 136, height: 64 } },
+    kirby: { default: { x: 65, y: -20, width: 110, height: 80 } },
     icon: { default: { x: 6, y: 8, width: 36, height: 28 } },
   },
   shirt: {
@@ -1391,6 +1388,7 @@ const CLOTHING_SLOTS = {
     baseHeight: 100,
     shared: { default: { x: 26, y: 100, width: 188, height: 112 } },
     robot: { default: { x: 11, y: 90, width: 198, height: 112 } },
+    kirby: { default: { x: 20, y: 128, width: 200, height: 110 } },
     icon: { default: { x: 4, y: 8, width: 40, height: 34 } },
   },
   jacket: {
@@ -1398,6 +1396,7 @@ const CLOTHING_SLOTS = {
     baseHeight: 100,
     shared: { default: { x: 22, y: 97, width: 196, height: 120 } },
     robot: { default: { x: 8, y: 90, width: 204, height: 116 } },
+    kirby: { default: { x: 16, y: 124, width: 208, height: 118 } },
     icon: { default: { x: 2, y: 6, width: 44, height: 36 } },
   },
   glasses: {
@@ -1405,6 +1404,7 @@ const CLOTHING_SLOTS = {
     baseHeight: 32,
     shared: { default: { x: 56, y: 53, width: 128, height: 30 } },
     robot: { default: { x: 43, y: 34, width: 134, height: 32 } },
+    kirby: { default: { x: 60, y: 76, width: 120, height: 30 } },
     icon: { default: { x: 4, y: 16, width: 40, height: 16 } },
   },
   watch: {
@@ -1412,6 +1412,7 @@ const CLOTHING_SLOTS = {
     baseHeight: 40,
     shared: { default: { x: 23, y: 204, width: 38, height: 22 } },
     robot: { default: { x: 14, y: 178, width: 34, height: 21 } },
+    kirby: { default: { x: 2, y: 142, width: 36, height: 20 } },
     icon: { default: { x: 12, y: 13, width: 24, height: 20 } },
   },
   ring: {
@@ -1419,6 +1420,7 @@ const CLOTHING_SLOTS = {
     baseHeight: 50,
     shared: { default: { x: 183, y: 183, width: 36, height: 42 } },
     robot: { default: { x: 174, y: 155, width: 36, height: 42 } },
+    kirby: { default: { x: 202, y: 142, width: 36, height: 38 } },
     icon: { default: { x: 12, y: 8, width: 24, height: 32 } },
   },
   shoes: {
@@ -1431,6 +1433,10 @@ const CLOTHING_SLOTS = {
     robot: {
       'clothing-shoe-left': { x: 57, y: 275, width: 62, height: 34 },
       'clothing-shoe-right': { x: 101, y: 275, width: 62, height: 34 },
+    },
+    kirby: {
+      'clothing-shoe-left': { x: 62, y: 230, width: 68, height: 40 },
+      'clothing-shoe-right': { x: 110, y: 230, width: 68, height: 40 },
     },
     icon: {
       'clothing-shoe-left': { x: 2, y: 24, width: 20, height: 15 },
@@ -1470,7 +1476,7 @@ function refreshClothingButtons() {
 }
 
 function renderClothingVariants() {
-  const mode = currentCharacter === 'robot' ? 'robot' : 'shared';
+  const mode = currentCharacter === 'robot' ? 'robot' : currentCharacter === 'kirby' ? 'kirby' : 'shared';
   ITEMS.forEach((item) => {
     item.svgIds.forEach((partId) => {
       const element = document.getElementById(partId);
@@ -1511,14 +1517,14 @@ function buildVariantContent(itemId, variantIndex, partId, mode = 'shared') {
     case 'hat':
       return buildHatContent(variantIndex);
     case 'shirt':
-      if (partId === 'clothing-shirt-sleeve-left') return buildShirtSleeveLeftContent(variantIndex);
-      if (partId === 'clothing-shirt-sleeve-right') return buildShirtSleeveRightContent(variantIndex);
-      if (mode === 'robot') return buildShirtBodyContent(variantIndex);
+      if (partId === 'clothing-shirt-sleeve-left') return (mode === 'kirby') ? '' : buildShirtSleeveLeftContent(variantIndex);
+      if (partId === 'clothing-shirt-sleeve-right') return (mode === 'kirby') ? '' : buildShirtSleeveRightContent(variantIndex);
+      if (mode === 'robot' || mode === 'kirby') return buildShirtBodyContent(variantIndex);
       return buildShirtContent(variantIndex);
     case 'jacket':
-      if (partId === 'clothing-jacket-sleeve-left') return buildJacketSleeveLeftContent(variantIndex);
-      if (partId === 'clothing-jacket-sleeve-right') return buildJacketSleeveRightContent(variantIndex);
-      if (mode === 'robot') return buildJacketBodyContent(variantIndex);
+      if (partId === 'clothing-jacket-sleeve-left') return (mode === 'kirby') ? '' : buildJacketSleeveLeftContent(variantIndex);
+      if (partId === 'clothing-jacket-sleeve-right') return (mode === 'kirby') ? '' : buildJacketSleeveRightContent(variantIndex);
+      if (mode === 'robot' || mode === 'kirby') return buildJacketBodyContent(variantIndex);
       return buildJacketContent(variantIndex);
     case 'glasses':
       return buildGlassesContent(variantIndex);
@@ -3962,11 +3968,11 @@ const CHARACTER_SVGS = {
     ${CLOTHING.hat}`,
   kirby: () => `
     <g id='walk-leg-left'>
-      <ellipse cx='96' cy='262' rx='30' ry='24' fill='#e8436a'/>
+      <ellipse cx='96' cy='246' rx='30' ry='24' fill='#e8436a'/>
       ${CLOTHING.shoeLeft}
     </g>
     <g id='walk-leg-right'>
-      <ellipse cx='144' cy='262' rx='30' ry='24' fill='#e8436a'/>
+      <ellipse cx='144' cy='246' rx='30' ry='24' fill='#e8436a'/>
       ${CLOTHING.shoeRight}
     </g>
     <circle cx='120' cy='124' r='106' fill='#ff8dc8'/>
@@ -3985,15 +3991,11 @@ const CHARACTER_SVGS = {
     <g>
       <ellipse cx='90' cy='90' rx='17' ry='22' fill='#1c2535'/>
       <ellipse cx='150' cy='90' rx='17' ry='22' fill='#1c2535'/>
-      <ellipse cx='90' cy='91' rx='10' ry='15' fill='#3fc5e8'/>
-      <ellipse cx='150' cy='91' rx='10' ry='15' fill='#3fc5e8'/>
-      <ellipse cx='90' cy='94' rx='6' ry='9' fill='#1c2535'/>
-      <ellipse cx='150' cy='94' rx='6' ry='9' fill='#1c2535'/>
-      <circle cx='96' cy='82' r='4.5' fill='white'/>
-      <circle cx='156' cy='82' r='4.5' fill='white'/>
+      <ellipse cx='90' cy='76' rx='10' ry='7' fill='white'/>
+      <ellipse cx='150' cy='76' rx='10' ry='7' fill='white'/>
       <circle cx='68' cy='118' r='16' fill='#f96fad' opacity='0.7'/>
       <circle cx='172' cy='118' r='16' fill='#f96fad' opacity='0.7'/>
-      <path id='character-mouth' d='M 106 130 Q 120 146 134 130' stroke='#c04878' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+      <path id='character-mouth' d='M 106 152 Q 120 168 134 152' stroke='#c04878' stroke-width='3.5' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
     ${CLOTHING.hat}`,
