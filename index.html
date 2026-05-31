@@ -87,7 +87,7 @@ header p {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
   padding: 22px;
 }
 
@@ -96,7 +96,7 @@ header p {
   min-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
   padding: 22px;
 }
 
@@ -122,7 +122,7 @@ header p {
   background: rgba(255, 255, 255, 0.9);
   color: var(--ink);
   cursor: pointer;
-  padding: 12px 8px 10px;
+  padding: 6px 8px 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -415,7 +415,7 @@ header p {
 
 .lets-hint {
   width: 100%;
-  min-height: 77px;
+  min-height: 65px;
   padding: 10px 20px;
   border-radius: 22px;
   font-size: 1rem;
@@ -1060,6 +1060,102 @@ const CHARACTERS = [
       <path d='M19 17 Q32 3 45 17V22H19Z' fill='#5d4639'/>
       <rect x='20' y='31' width='24' height='18' rx='8' fill='#5ca7f7'/>
       <path d='M32 31 26 43H38Z' fill='#ffcc66'/>
+    </svg>`,
+  },
+  {
+    id: 'anpanman',
+    label: 'アンパンマン',
+    cardLabel: 'Anpanman',
+    preview: `<svg viewBox='0 0 64 64'>
+      <circle cx='32' cy='24' r='16' fill='#e98b50'/>
+      <circle cx='24' cy='26' r='4.5' fill='#ef5f4b'/>
+      <circle cx='40' cy='26' r='4.5' fill='#ef5f4b'/>
+      <circle cx='32' cy='24' r='5' fill='#d44738'/>
+      <rect x='20' y='40' width='24' height='12' rx='6' fill='#d73d39'/>
+      <path d='M18 42 12 48H52L46 42Z' fill='#ffe17a'/>
+    </svg>`,
+  },
+  {
+    id: 'goku',
+    label: 'ごくう',
+    cardLabel: 'Goku',
+    preview: `<svg viewBox='0 0 64 64'>
+      <path d='M17 19 26 5 31 18 36 6 44 18 50 11 51 25 13 25Z' fill='#1d2232'/>
+      <circle cx='32' cy='26' r='12' fill='#f0bc92'/>
+      <rect x='20' y='40' width='24' height='12' rx='6' fill='#f1912b'/>
+      <path d='M32 40 25 52H39Z' fill='#2d5fbb'/>
+    </svg>`,
+  },
+  {
+    id: 'anya',
+    label: 'アーニャ',
+    cardLabel: 'Anya',
+    preview: `<svg viewBox='0 0 64 64'>
+      <path d='M16 16 24 10 22 22ZM48 16 40 10 42 22Z' fill='#181521'/>
+      <path d='M15 24 Q18 10 32 10 Q46 10 49 24V33H15Z' fill='#f2a6b8'/>
+      <circle cx='32' cy='27' r='12' fill='#f5d0b0'/>
+      <rect x='22' y='41' width='20' height='12' rx='6' fill='#181521'/>
+      <circle cx='27' cy='27' r='3' fill='#4aa57d'/><circle cx='37' cy='27' r='3' fill='#4aa57d'/>
+    </svg>`,
+  },
+  {
+    id: 'luffy',
+    label: 'ルフィ',
+    cardLabel: 'Luffy',
+    preview: `<svg viewBox='0 0 64 64'>
+      <path d='M18 18 Q24 8 32 8 Q40 8 46 18V23H18Z' fill='#1c2231'/>
+      <circle cx='32' cy='25' r='12' fill='#f2c397'/>
+      <rect x='20' y='39' width='24' height='12' rx='6' fill='#d63b38'/>
+      <rect x='23' y='51' width='18' height='4' rx='2' fill='#2c6cc3'/>
+    </svg>`,
+  },
+  {
+    id: 'hello-kitty',
+    label: 'ハローキティ',
+    cardLabel: 'Hello Kitty',
+    preview: `<svg viewBox='0 0 64 64'>
+      <circle cx='32' cy='23' r='14' fill='white'/>
+      <path d='M18 18 24 8 29 18ZM46 18 40 8 35 18Z' fill='white'/>
+      <circle cx='27' cy='23' r='2.4' fill='#1f2637'/><circle cx='37' cy='23' r='2.4' fill='#1f2637'/>
+      <ellipse cx='32' cy='27' rx='3.5' ry='2.8' fill='#ffd24d'/>
+      <path d='M38 13 44 10 46 16 40 19Z' fill='#ef4f63'/>
+      <rect x='21' y='40' width='22' height='12' rx='6' fill='#5ca7f7'/>
+    </svg>`,
+  },
+  {
+    id: 'buttercup',
+    label: 'バターカップ',
+    cardLabel: 'Buttercup',
+    preview: `<svg viewBox='0 0 64 64'>
+      <circle cx='32' cy='23' r='15' fill='#f5d3b2'/>
+      <path d='M16 23 Q18 7 32 7 Q46 7 48 23L44 19 44 32 20 32 20 19Z' fill='#121622'/>
+      <ellipse cx='26' cy='24' rx='4.5' ry='6' fill='#6fd24e'/><ellipse cx='38' cy='24' rx='4.5' ry='6' fill='#6fd24e'/>
+      <rect x='22' y='40' width='20' height='11' rx='5' fill='#67c84f'/>
+      <rect x='22' y='45' width='20' height='3' fill='white'/>
+    </svg>`,
+  },
+  {
+    id: 'doraemon',
+    label: 'ドラえもん',
+    cardLabel: 'Doraemon',
+    preview: `<svg viewBox='0 0 64 64'>
+      <circle cx='32' cy='22' r='14' fill='#49a9f4'/>
+      <circle cx='32' cy='25' r='11' fill='white'/>
+      <circle cx='28' cy='21' r='2.8' fill='#1f2637'/><circle cx='36' cy='21' r='2.8' fill='#1f2637'/>
+      <circle cx='32' cy='25' r='3.3' fill='#ef4f63'/>
+      <rect x='18' y='39' width='28' height='15' rx='8' fill='#49a9f4'/>
+      <rect x='19' y='36' width='26' height='4' rx='2' fill='#ef4f63'/>
+    </svg>`,
+  },
+  {
+    id: 'kirby',
+    label: 'カービィ',
+    cardLabel: 'Kirby',
+    preview: `<svg viewBox='0 0 64 64'>
+      <circle cx='32' cy='28' r='18' fill='#f7a0cf'/>
+      <ellipse cx='25' cy='24' rx='3' ry='5' fill='#243047'/><ellipse cx='39' cy='24' rx='3' ry='5' fill='#243047'/>
+      <path d='M28 34 Q32 39 36 34' stroke='#c64f82' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+      <ellipse cx='20' cy='45' rx='8' ry='5' fill='#d93b52'/><ellipse cx='44' cy='45' rx='8' ry='5' fill='#d93b52'/>
     </svg>`,
   },
 ];
@@ -3123,6 +3219,353 @@ const CHARACTER_SVGS = {
       <circle cx='148' cy='70' r='6' fill='#243047'/>
       <path d='M120 78 116 92H124Z' fill='#e2ab84'/>
       <path id='character-mouth' d='M 98 102 Q 120 111 142 102' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  anpanman: () => `
+    <path d='M64 144 Q120 108 176 144 L176 210 Q120 232 64 210Z' fill='#ffe17a' opacity='0.92'/>
+    <g id='walk-leg-left'>
+      <rect x='88' y='230' width='24' height='78' rx='12' fill='#d73d39'/>
+      <ellipse cx='100' cy='314' rx='22' ry='11' fill='#c02c2b'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='132' y='230' width='24' height='78' rx='12' fill='#d73d39'/>
+      <ellipse cx='144' cy='314' rx='22' ry='11' fill='#c02c2b'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <rect x='70' y='120' width='100' height='108' rx='30' fill='#d73d39'/>
+      <circle cx='120' cy='178' r='19' fill='#f5d07b'/>
+      <rect x='100' y='150' width='40' height='9' rx='4.5' fill='#f7df97'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <rect x='34' y='138' width='26' height='76' rx='13' fill='#d73d39'/>
+        <ellipse cx='47' cy='221' rx='14' ry='11' fill='#f5d07b'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <rect x='180' y='138' width='26' height='76' rx='13' fill='#d73d39'/>
+      <ellipse cx='193' cy='221' rx='14' ry='11' fill='#f5d07b'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <circle cx='120' cy='72' r='52' fill='#e98b50'/>
+      <circle cx='92' cy='68' r='6' fill='#243047'/>
+      <circle cx='148' cy='68' r='6' fill='#243047'/>
+      <circle cx='120' cy='72' r='11' fill='#d44738'/>
+      <circle cx='88' cy='86' r='10' fill='#ef5f4b'/>
+      <circle cx='152' cy='86' r='10' fill='#ef5f4b'/>
+      <path id='character-mouth' d='M 96 102 Q 120 120 144 102' stroke='#8f2b25' stroke-width='3' fill='none' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  goku: () => `
+    <g id='walk-leg-left'>
+      <rect x='88' y='228' width='24' height='80' rx='12' fill='#295ab1'/>
+      <ellipse cx='100' cy='314' rx='22' ry='11' fill='#203f7e'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='132' y='228' width='24' height='80' rx='12' fill='#295ab1'/>
+      <ellipse cx='144' cy='314' rx='22' ry='11' fill='#203f7e'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <path d='M76 126 H164 L176 174 160 228H80L64 174Z' fill='#f1912b'/>
+      <path d='M120 126 102 176 138 176Z' fill='#e06f1d'/>
+      <rect x='90' y='178' width='60' height='12' rx='6' fill='#2d5fbb'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <rect x='34' y='138' width='26' height='78' rx='13' fill='#f0bc92'/>
+        <rect x='36' y='180' width='22' height='18' rx='8' fill='#2d5fbb'/>
+        <ellipse cx='47' cy='222' rx='14' ry='11' fill='#f0bc92'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <rect x='180' y='138' width='26' height='78' rx='13' fill='#f0bc92'/>
+      <rect x='182' y='180' width='22' height='18' rx='8' fill='#2d5fbb'/>
+      <ellipse cx='193' cy='222' rx='14' ry='11' fill='#f0bc92'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <path d='M76 56 90 26 100 48 112 18 124 46 136 16 150 48 166 28 168 76 72 76Z' fill='#1d2232'/>
+      <circle cx='120' cy='78' r='42' fill='#f0bc92'/>
+      <circle cx='96' cy='76' r='6' fill='#243047'/>
+      <circle cx='144' cy='76' r='6' fill='#243047'/>
+      <line x1='99' y1='88' x2='94' y2='96' stroke='#9b634a' stroke-width='2.5' stroke-linecap='round'/>
+      <path id='character-mouth' d='M 98 102 Q 120 111 142 102' stroke='#7f3d2f' stroke-width='3' fill='none' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  anya: () => `
+    <g transform='translate(24 42) scale(0.8)'>
+      <g id='walk-leg-left'>
+        <rect x='92' y='236' width='18' height='70' rx='9' fill='#252437'/>
+        <ellipse cx='101' cy='312' rx='18' ry='9' fill='#1a1927'/>
+        ${CLOTHING.shoeLeft}
+      </g>
+      <g id='walk-leg-right'>
+        <rect x='130' y='236' width='18' height='70' rx='9' fill='#252437'/>
+        <ellipse cx='139' cy='312' rx='18' ry='9' fill='#1a1927'/>
+        ${CLOTHING.shoeRight}
+      </g>
+      <g>
+        <path d='M82 136 Q120 112 158 136 L170 220 Q120 240 70 220Z' fill='#181521'/>
+        <path d='M88 154 H152' stroke='#e0b85c' stroke-width='7' stroke-linecap='round'/>
+        <path d='M94 174 H146' stroke='#f4e8cf' stroke-width='6' stroke-linecap='round'/>
+      </g>
+      ${CLOTHING.shirt}
+      ${CLOTHING.jacket}
+      <g id='walk-arm-left'>
+        <g id='wave-arm'>
+          <rect x='34' y='150' width='24' height='62' rx='12' fill='#f5d0b0'/>
+          <rect x='34' y='150' width='24' height='16' rx='7' fill='#f5f0ff'/>
+          <ellipse cx='46' cy='219' rx='12' ry='10' fill='#f5d0b0'/>
+          ${CLOTHING.watch}
+        </g>
+      </g>
+      <g id='walk-arm-right'>
+        <rect x='182' y='150' width='24' height='62' rx='12' fill='#f5d0b0'/>
+        <rect x='182' y='150' width='24' height='16' rx='7' fill='#f5f0ff'/>
+        <ellipse cx='194' cy='219' rx='12' ry='10' fill='#f5d0b0'/>
+        ${CLOTHING.ring}
+      </g>
+      <g>
+        <path d='M78 34 92 16 98 44ZM162 34 148 16 142 44Z' fill='#181521'/>
+        <path d='M68 70 Q72 18 120 18 Q168 18 172 70V86H68Z' fill='#f2a6b8'/>
+        <circle cx='120' cy='78' r='42' fill='#f5d0b0'/>
+        <path d='M78 72 Q84 40 108 40 Q94 70 96 100Z' fill='#f2a6b8'/>
+        <path d='M162 72 Q156 40 132 40 Q146 70 144 100Z' fill='#f2a6b8'/>
+        <ellipse cx='98' cy='76' rx='10' ry='13' fill='#4aa57d'/>
+        <ellipse cx='142' cy='76' rx='10' ry='13' fill='#4aa57d'/>
+        <circle cx='100' cy='78' r='3.2' fill='#243047'/>
+        <circle cx='144' cy='78' r='3.2' fill='#243047'/>
+        <path id='character-mouth' d='M 102 104 Q 120 113 138 104' stroke='#9f5d66' stroke-width='3' fill='none' stroke-linecap='round'/>
+      </g>
+      ${CLOTHING.glasses}
+      ${CLOTHING.hat}
+    </g>`,
+  luffy: () => `
+    <g id='walk-leg-left'>
+      <rect x='92' y='230' width='22' height='78' rx='10' fill='#3369c6'/>
+      <ellipse cx='103' cy='314' rx='21' ry='10' fill='#214983'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='126' y='230' width='22' height='78' rx='10' fill='#3369c6'/>
+      <ellipse cx='137' cy='314' rx='21' ry='10' fill='#214983'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <path d='M78 126 H162 L170 222 Q120 238 70 222Z' fill='#d63b38'/>
+      <path d='M120 126 106 168 134 168Z' fill='#f4d9b1'/>
+      <rect x='96' y='176' width='48' height='12' rx='6' fill='#f0c85d'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <rect x='34' y='140' width='24' height='74' rx='12' fill='#f2c397'/>
+        <ellipse cx='46' cy='220' rx='13' ry='10' fill='#f2c397'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <rect x='182' y='140' width='24' height='74' rx='12' fill='#f2c397'/>
+      <ellipse cx='194' cy='220' rx='13' ry='10' fill='#f2c397'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <path d='M78 58 Q88 24 120 24 Q152 24 162 58V78H78Z' fill='#1c2231'/>
+      <circle cx='120' cy='80' r='42' fill='#f2c397'/>
+      <circle cx='96' cy='76' r='6' fill='#243047'/>
+      <circle cx='144' cy='76' r='6' fill='#243047'/>
+      <line x1='101' y1='88' x2='97' y2='95' stroke='#9d5f52' stroke-width='2.5' stroke-linecap='round'/>
+      <path id='character-mouth' d='M 98 102 Q 120 112 142 102' stroke='#8f4233' stroke-width='3' fill='none' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  'hello-kitty': () => `
+    <g id='walk-leg-left'>
+      <rect x='94' y='236' width='18' height='64' rx='9' fill='#ffd862'/>
+      <ellipse cx='103' cy='312' rx='18' ry='9' fill='#f0be45'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='128' y='236' width='18' height='64' rx='9' fill='#ffd862'/>
+      <ellipse cx='137' cy='312' rx='18' ry='9' fill='#f0be45'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <path d='M80 136 Q120 116 160 136 L168 224 Q120 238 72 224Z' fill='#6fb7ff'/>
+      <rect x='102' y='150' width='36' height='56' rx='14' fill='#fff7fb'/>
+      <circle cx='108' cy='164' r='5' fill='#ffd24d'/>
+      <circle cx='132' cy='164' r='5' fill='#ffd24d'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <rect x='34' y='146' width='24' height='66' rx='12' fill='white'/>
+        <ellipse cx='46' cy='219' rx='12' ry='10' fill='white'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <rect x='182' y='146' width='24' height='66' rx='12' fill='white'/>
+      <ellipse cx='194' cy='219' rx='12' ry='10' fill='white'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <circle cx='120' cy='78' r='44' fill='white'/>
+      <path d='M80 54 92 24 104 54Z' fill='white'/>
+      <path d='M160 54 148 24 136 54Z' fill='white'/>
+      <path d='M142 40 156 30 162 42 148 52Z' fill='#ef4f63'/>
+      <circle cx='98' cy='76' r='5' fill='#243047'/>
+      <circle cx='142' cy='76' r='5' fill='#243047'/>
+      <ellipse cx='120' cy='86' rx='7' ry='5' fill='#ffd24d'/>
+      <path id='character-mouth' d='M 106 102 Q 120 108 134 102' stroke='#b78853' stroke-width='2.8' fill='none' stroke-linecap='round'/>
+      <line x1='90' y1='88' x2='66' y2='84' stroke='#243047' stroke-width='2.5' stroke-linecap='round'/>
+      <line x1='90' y1='96' x2='66' y2='100' stroke='#243047' stroke-width='2.5' stroke-linecap='round'/>
+      <line x1='150' y1='88' x2='174' y2='84' stroke='#243047' stroke-width='2.5' stroke-linecap='round'/>
+      <line x1='150' y1='96' x2='174' y2='100' stroke='#243047' stroke-width='2.5' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  buttercup: () => `
+    <g id='walk-leg-left'>
+      <rect x='98' y='240' width='14' height='56' rx='7' fill='white'/>
+      <rect x='98' y='294' width='14' height='10' rx='4' fill='#11151e'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='128' y='240' width='14' height='56' rx='7' fill='white'/>
+      <rect x='128' y='294' width='14' height='10' rx='4' fill='#11151e'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <rect x='90' y='146' width='60' height='88' rx='24' fill='#67c84f'/>
+      <rect x='90' y='184' width='60' height='16' fill='white'/>
+      <rect x='90' y='192' width='60' height='10' fill='#11151e'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <rect x='34' y='156' width='22' height='58' rx='11' fill='#f5d3b2'/>
+        <ellipse cx='45' cy='219' rx='11' ry='9' fill='#f5d3b2'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <rect x='184' y='156' width='22' height='58' rx='11' fill='#f5d3b2'/>
+      <ellipse cx='195' cy='219' rx='11' ry='9' fill='#f5d3b2'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <circle cx='120' cy='78' r='56' fill='#f5d3b2'/>
+      <path d='M64 78 Q68 18 120 18 Q172 18 176 78L162 62V98H78V62Z' fill='#121622'/>
+      <ellipse cx='94' cy='82' rx='15' ry='18' fill='white'/>
+      <ellipse cx='146' cy='82' rx='15' ry='18' fill='white'/>
+      <ellipse cx='94' cy='82' rx='10' ry='13' fill='#6fd24e'/>
+      <ellipse cx='146' cy='82' rx='10' ry='13' fill='#6fd24e'/>
+      <circle cx='96' cy='83' r='4' fill='#121622'/>
+      <circle cx='148' cy='83' r='4' fill='#121622'/>
+      <path id='character-mouth' d='M 102 108 Q 120 118 138 108' stroke='#7a4540' stroke-width='3' fill='none' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  doraemon: () => `
+    <g id='walk-leg-left'>
+      <rect x='94' y='238' width='18' height='60' rx='9' fill='#ef4f63'/>
+      <ellipse cx='103' cy='312' rx='18' ry='9' fill='#d63e52'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='128' y='238' width='18' height='60' rx='9' fill='#ef4f63'/>
+      <ellipse cx='137' cy='312' rx='18' ry='9' fill='#d63e52'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <ellipse cx='120' cy='178' rx='66' ry='72' fill='#49a9f4'/>
+      <ellipse cx='120' cy='186' rx='42' ry='52' fill='white'/>
+      <rect x='84' y='138' width='72' height='12' rx='6' fill='#ef4f63'/>
+      <circle cx='120' cy='152' r='8' fill='#ffd24d'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <rect x='30' y='150' width='26' height='66' rx='13' fill='#49a9f4'/>
+        <ellipse cx='43' cy='222' rx='13' ry='10' fill='white'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <rect x='184' y='150' width='26' height='66' rx='13' fill='#49a9f4'/>
+      <ellipse cx='197' cy='222' rx='13' ry='10' fill='white'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <circle cx='120' cy='74' r='52' fill='#49a9f4'/>
+      <ellipse cx='120' cy='82' rx='44' ry='38' fill='white'/>
+      <ellipse cx='102' cy='70' rx='12' ry='16' fill='white'/>
+      <ellipse cx='138' cy='70' rx='12' ry='16' fill='white'/>
+      <circle cx='104' cy='72' r='4.5' fill='#243047'/>
+      <circle cx='140' cy='72' r='4.5' fill='#243047'/>
+      <circle cx='120' cy='84' r='8' fill='#ef4f63'/>
+      <path id='character-mouth' d='M 98 104 Q 120 116 142 104' stroke='#8f4233' stroke-width='3' fill='none' stroke-linecap='round'/>
+      <line x1='98' y1='88' x2='74' y2='84' stroke='#243047' stroke-width='2.2' stroke-linecap='round'/>
+      <line x1='98' y1='96' x2='74' y2='100' stroke='#243047' stroke-width='2.2' stroke-linecap='round'/>
+      <line x1='142' y1='88' x2='166' y2='84' stroke='#243047' stroke-width='2.2' stroke-linecap='round'/>
+      <line x1='142' y1='96' x2='166' y2='100' stroke='#243047' stroke-width='2.2' stroke-linecap='round'/>
+    </g>
+    ${CLOTHING.glasses}
+    ${CLOTHING.hat}`,
+  kirby: () => `
+    <g id='walk-leg-left'>
+      <rect x='96' y='236' width='18' height='52' rx='9' fill='#d93b52'/>
+      <ellipse cx='105' cy='308' rx='20' ry='11' fill='#d93b52'/>
+      ${CLOTHING.shoeLeft}
+    </g>
+    <g id='walk-leg-right'>
+      <rect x='126' y='236' width='18' height='52' rx='9' fill='#d93b52'/>
+      <ellipse cx='135' cy='308' rx='20' ry='11' fill='#d93b52'/>
+      ${CLOTHING.shoeRight}
+    </g>
+    <g>
+      <ellipse cx='120' cy='178' rx='72' ry='72' fill='#f7a0cf'/>
+      <ellipse cx='86' cy='176' rx='18' ry='14' fill='#f7a0cf'/>
+      <ellipse cx='154' cy='176' rx='18' ry='14' fill='#f7a0cf'/>
+    </g>
+    ${CLOTHING.shirt}
+    ${CLOTHING.jacket}
+    <g id='walk-arm-left'>
+      <g id='wave-arm'>
+        <ellipse cx='44' cy='188' rx='18' ry='14' fill='#f7a0cf'/>
+        ${CLOTHING.watch}
+      </g>
+    </g>
+    <g id='walk-arm-right'>
+      <ellipse cx='196' cy='188' rx='18' ry='14' fill='#f7a0cf'/>
+      ${CLOTHING.ring}
+    </g>
+    <g>
+      <circle cx='120' cy='86' r='54' fill='#f7a0cf'/>
+      <ellipse cx='96' cy='82' rx='8' ry='12' fill='#243047'/>
+      <ellipse cx='144' cy='82' rx='8' ry='12' fill='#243047'/>
+      <circle cx='86' cy='96' r='7' fill='#ef7db0' opacity='0.85'/>
+      <circle cx='154' cy='96' r='7' fill='#ef7db0' opacity='0.85'/>
+      <path id='character-mouth' d='M 104 106 Q 120 118 136 106' stroke='#b64f7b' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
     ${CLOTHING.hat}`,
