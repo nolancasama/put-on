@@ -184,14 +184,6 @@ header p {
     linear-gradient(180deg, #dff6ff 0%, #fef7de 62%, #f7d8a5 100%);
 }
 
-.stage-wrap::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 64px;
-  border-top: 5px dashed rgba(126, 93, 47, 0.26);
-}
 
 
 .walk-track {
@@ -218,7 +210,7 @@ header p {
 .character-slot {
   position: absolute;
   left: 10px;
-  bottom: 34px;
+  bottom: 8px;
   width: clamp(200px, 30vw, 300px);
   transform: translateX(0);
   z-index: 2;
@@ -2456,8 +2448,11 @@ function hideCharacterBubble() {
 }
 
 function askWhat() {
-  say('What?');
+  showCharacterBubble('What?');
   speak('What?');
+  window.setTimeout(() => {
+    if (!celebrationMode) hideCharacterBubble();
+  }, 1800);
 }
 
 function tone(frequency) {
