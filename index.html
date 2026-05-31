@@ -89,7 +89,6 @@ header p {
   flex-direction: column;
   gap: 18px;
   padding: 22px;
-  position: relative;
 }
 
 .panel {
@@ -242,16 +241,16 @@ header p {
 
 .stage-speech {
   position: absolute;
-  bottom: 22px;
-  left: 22px;
-  right: 22px;
-  z-index: 5;
-  padding: 14px 18px;
-  border-radius: 18px;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 3;
+  padding: 12px 16px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.93);
-  box-shadow: 0 8px 24px rgba(43, 49, 71, 0.14);
+  box-shadow: 0 6px 18px rgba(43, 49, 71, 0.14);
   text-align: center;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 800;
   pointer-events: none;
 }
@@ -725,8 +724,8 @@ header p {
         </div>
       </div>
       <div class="confetti-overlay" id="confetti-overlay" aria-hidden="true"></div>
+      <div class="stage-speech" id="stage-speech" hidden></div>
     </div>
-    <div class="stage-speech" id="stage-speech" hidden></div>
   </section>
 
   <section class="panel" aria-label="ふくのコントロール">
