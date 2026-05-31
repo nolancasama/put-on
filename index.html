@@ -2148,6 +2148,9 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
   const finishTranscriptIndex = normalizedCandidates.findIndex((value) => /^let'?s\s+\w+/i.test(value));
   if (finishTranscriptIndex !== -1) {
+    if (!isFinal) {
+      return false;
+    }
     const display = candidates[finishTranscriptIndex].charAt(0).toUpperCase() + candidates[finishTranscriptIndex].slice(1);
     speechSessionHandled = true;
     handleFinish(display);
