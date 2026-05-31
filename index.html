@@ -87,7 +87,7 @@ header p {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 0;
   padding: 22px;
 }
 
@@ -120,7 +120,7 @@ header p {
   gap: 8px;
   overflow-x: auto;
   overflow-y: visible;
-  padding: 8px 2px 24px;
+  padding: 8px 2px 22px;
   flex: 1;
   min-width: 0;
   flex-shrink: 1;
@@ -223,6 +223,14 @@ header p {
 .walk-track {
   position: absolute;
   inset: 0;
+}
+
+.sky-deco {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  width: 100%; height: 62%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .grass-strip {
@@ -466,23 +474,32 @@ header p {
 .lets-hint {
   width: 100%;
   min-height: 65px;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border-radius: 22px;
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
-  background: #f0f4ff;
-  color: #5b6fa6;
-  border: 2px dashed #b0bcde;
+  background: linear-gradient(135deg, #e6eeff 0%, #f2e8ff 100%);
+  color: #4a5fa8;
+  border: 2.5px dashed #8aa4e8;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
 }
 
 .lets-hint em {
   font-style: normal;
   color: var(--accent);
+}
+
+.hint-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8096cc;
+  letter-spacing: 0.01em;
 }
 
 .speech-controls {
@@ -779,6 +796,16 @@ header p {
 
     <div class="stage-wrap">
       <div class="walk-track" id="walk-track">
+        <svg class="sky-deco" aria-hidden="true" viewBox="0 0 400 200" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="338" cy="44" r="26" fill="#ffd166" opacity="0.88"/>
+          <path d="M338 10v10M374 44h-10M338 78v-10M302 44h10M365 16l-7 7M311 16l7 7M365 72l-7-7M311 72l7-7" stroke="#ffb830" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="70" cy="40" rx="36" ry="16" fill="white" opacity="0.86"/>
+          <ellipse cx="50" cy="48" rx="22" ry="14" fill="white" opacity="0.86"/>
+          <ellipse cx="98" cy="48" rx="20" ry="12" fill="white" opacity="0.86"/>
+          <ellipse cx="208" cy="60" rx="28" ry="13" fill="white" opacity="0.7"/>
+          <ellipse cx="192" cy="68" rx="18" ry="10" fill="white" opacity="0.7"/>
+          <ellipse cx="230" cy="68" rx="16" ry="9" fill="white" opacity="0.7"/>
+        </svg>
         <div class="grass-strip" aria-hidden="true">
           <svg viewBox="0 0 100 72" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
             <rect y="28" width="100" height="44" fill="#3c7a1e"/>
@@ -1025,10 +1052,16 @@ const CHARACTERS = [
       <rect x='12' y='17' width='4' height='10' rx='2' fill='#5aaccf'/>
       <rect x='48' y='17' width='4' height='10' rx='2' fill='#5aaccf'/>
       <rect x='24' y='33' width='16' height='6' rx='2.5' fill='#5aaccf'/>
+      <rect x='21' y='15' width='8' height='2.5' rx='1.2' fill='#5aaccf'/>
+      <rect x='35' y='15' width='8' height='2.5' rx='1.2' fill='#5aaccf'/>
       <circle cx='26' cy='22' r='4.8' fill='white'/>
       <circle cx='38' cy='22' r='4.8' fill='white'/>
       <circle cx='27' cy='23' r='2.6' fill='#2d3142'/>
       <circle cx='39' cy='23' r='2.6' fill='#2d3142'/>
+      <circle cx='28' cy='21' r='1.2' fill='white'/>
+      <circle cx='40' cy='21' r='1.2' fill='white'/>
+      <ellipse cx='20' cy='27' rx='3' ry='2' fill='#a8dcea' opacity='0.6'/>
+      <ellipse cx='44' cy='27' rx='3' ry='2' fill='#a8dcea' opacity='0.6'/>
       <rect x='18' y='37' width='28' height='15' rx='5' fill='#7ec8e3'/>
     </svg>`,
   },
@@ -1040,7 +1073,18 @@ const CHARACTERS = [
       <circle cx='32' cy='30' r='18' fill='#d9a35c'/>
       <path d='M18 20 24 8 30 20Z' fill='#d9a35c'/>
       <path d='M46 20 40 8 34 20Z' fill='#d9a35c'/>
-      <circle cx='25' cy='29' r='3' fill='#243047'/><circle cx='39' cy='29' r='3' fill='#243047'/>
+      <path d='M20 20 23 12 28 20Z' fill='#f4bdd0'/>
+      <path d='M44 20 41 12 36 20Z' fill='#f4bdd0'/>
+      <path d='M22 23 Q25 20 28 23' stroke='#5d3a18' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M36 23 Q39 20 42 23' stroke='#5d3a18' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='25' cy='29' r='3.5' fill='#b8760a'/>
+      <circle cx='39' cy='29' r='3.5' fill='#b8760a'/>
+      <ellipse cx='25' cy='29' rx='1.3' ry='3' fill='#1a2030'/>
+      <ellipse cx='39' cy='29' rx='1.3' ry='3' fill='#1a2030'/>
+      <circle cx='26' cy='27' r='1.2' fill='white'/>
+      <circle cx='40' cy='27' r='1.2' fill='white'/>
+      <ellipse cx='18' cy='32' rx='3' ry='2' fill='#f4a0b0' opacity='0.6'/>
+      <ellipse cx='46' cy='32' rx='3' ry='2' fill='#f4a0b0' opacity='0.6'/>
       <path d='M30 35 Q32 38 34 35' stroke='#243047' stroke-width='2.5' fill='none' stroke-linecap='round'/>
     </svg>`,
   },
@@ -1052,8 +1096,17 @@ const CHARACTERS = [
       <ellipse cx='32' cy='34' rx='18' ry='16' fill='#7ccf73'/>
       <circle cx='28' cy='20' r='12' fill='#7ccf73'/>
       <path d='M42 24 54 30 42 34Z' fill='#7ccf73'/>
-      <circle cx='24' cy='20' r='2.8' fill='#23303e'/>
       <path d='M18 14 22 8 26 14M28 12 32 6 36 12' stroke='#58b85e' stroke-width='3' stroke-linecap='round'/>
+      <path d='M18 13 Q22 10 26 13' stroke='#3a8a34' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M28 12 Q32 9 36 12' stroke='#3a8a34' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='24' cy='20' r='3.5' fill='white'/>
+      <circle cx='34' cy='20' r='3.5' fill='white'/>
+      <circle cx='24' cy='20' r='2.2' fill='#23303e'/>
+      <circle cx='34' cy='20' r='2.2' fill='#23303e'/>
+      <circle cx='25' cy='18' r='1' fill='white'/>
+      <circle cx='35' cy='18' r='1' fill='white'/>
+      <ellipse cx='18' cy='26' rx='3' ry='2' fill='#a0f08a' opacity='0.65'/>
+      <ellipse cx='40' cy='26' rx='3' ry='2' fill='#a0f08a' opacity='0.65'/>
     </svg>`,
   },
   {
@@ -1062,10 +1115,18 @@ const CHARACTERS = [
     cardLabel: 'Alien',
     preview: `<svg viewBox='0 0 64 64'>
       <ellipse cx='32' cy='22' rx='16' ry='14' fill='#8ce7ce'/>
+      <path d='M24 10 20 4M40 10 44 4' stroke='#4db7a8' stroke-width='3' stroke-linecap='round'/>
+      <circle cx='20' cy='4' r='2.5' fill='#ff6b6b'/>
+      <circle cx='44' cy='4' r='2.5' fill='#ffd166'/>
       <ellipse cx='25' cy='23' rx='4.5' ry='7' fill='#243047'/>
       <ellipse cx='39' cy='23' rx='4.5' ry='7' fill='#243047'/>
+      <ellipse cx='25' cy='23' rx='2.8' ry='4.5' fill='#2db8a0'/>
+      <ellipse cx='39' cy='23' rx='2.8' ry='4.5' fill='#2db8a0'/>
+      <circle cx='27' cy='20' r='1.5' fill='white'/>
+      <circle cx='41' cy='20' r='1.5' fill='white'/>
+      <ellipse cx='19' cy='28' rx='3' ry='2' fill='#7dd9c0' opacity='0.55'/>
+      <ellipse cx='45' cy='28' rx='3' ry='2' fill='#7dd9c0' opacity='0.55'/>
       <rect x='23' y='37' width='18' height='13' rx='6' fill='#8ce7ce'/>
-      <path d='M24 10 20 4M40 10 44 4' stroke='#4db7a8' stroke-width='3' stroke-linecap='round'/>
     </svg>`,
   },
   {
@@ -1076,7 +1137,12 @@ const CHARACTERS = [
       <circle cx='32' cy='28' r='17' fill='#8b5a3c'/>
       <circle cx='18' cy='28' r='7' fill='#c89463'/><circle cx='46' cy='28' r='7' fill='#c89463'/>
       <ellipse cx='32' cy='33' rx='12' ry='9' fill='#dcb38a'/>
+      <path d='M22 21 Q26 18 30 21' stroke='#4a2a12' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M34 21 Q38 18 42 21' stroke='#4a2a12' stroke-width='1.5' fill='none' stroke-linecap='round'/>
       <circle cx='26' cy='26' r='3' fill='#1f293b'/><circle cx='38' cy='26' r='3' fill='#1f293b'/>
+      <circle cx='27' cy='24' r='1.2' fill='white'/><circle cx='39' cy='24' r='1.2' fill='white'/>
+      <ellipse cx='19' cy='31' rx='3' ry='2' fill='#e8a070' opacity='0.5'/>
+      <ellipse cx='45' cy='31' rx='3' ry='2' fill='#e8a070' opacity='0.5'/>
     </svg>`,
   },
   {
@@ -1086,8 +1152,15 @@ const CHARACTERS = [
     preview: `<svg viewBox='0 0 64 64'>
       <ellipse cx='32' cy='34' rx='17' ry='22' fill='#2f374d'/>
       <ellipse cx='32' cy='37' rx='11' ry='16' fill='white'/>
-      <ellipse cx='25' cy='24' rx='3.5' ry='5' fill='#1d2232'/><ellipse cx='39' cy='24' rx='3.5' ry='5' fill='#1d2232'/>
+      <ellipse cx='25' cy='24' rx='4.5' ry='5.5' fill='white'/>
+      <ellipse cx='39' cy='24' rx='4.5' ry='5.5' fill='white'/>
+      <ellipse cx='25' cy='24' rx='3' ry='4' fill='#1d2232'/>
+      <ellipse cx='39' cy='24' rx='3' ry='4' fill='#1d2232'/>
+      <circle cx='26' cy='22' r='1.3' fill='white'/>
+      <circle cx='40' cy='22' r='1.3' fill='white'/>
       <path d='M32 28 26 33 32 36 38 33Z' fill='#ffb347'/>
+      <ellipse cx='19' cy='31' rx='2.5' ry='2' fill='#ffb3a0' opacity='0.6'/>
+      <ellipse cx='45' cy='31' rx='2.5' ry='2' fill='#ffb3a0' opacity='0.6'/>
     </svg>`,
   },
   {
@@ -1099,6 +1172,14 @@ const CHARACTERS = [
       <path d='M18 26 10 16 14 34ZM46 26 54 16 50 34Z' fill='#8de29c'/>
       <circle cx='28' cy='20' r='12' fill='#56c06f'/>
       <path d='M20 12 24 6 28 12M30 10 34 4 38 10' stroke='#f5c56b' stroke-width='3' stroke-linecap='round'/>
+      <path d='M20 15 Q24 12 27 15' stroke='#2d7042' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M30 14 Q34 11 37 14' stroke='#2d7042' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='24' cy='20' r='3.2' fill='#1e2a20'/>
+      <circle cx='34' cy='20' r='3.2' fill='#1e2a20'/>
+      <circle cx='25' cy='18' r='1.2' fill='white'/>
+      <circle cx='35' cy='18' r='1.2' fill='white'/>
+      <ellipse cx='19' cy='26' rx='2.8' ry='2' fill='#8af09e' opacity='0.55'/>
+      <ellipse cx='40' cy='26' rx='2.8' ry='2' fill='#8af09e' opacity='0.55'/>
     </svg>`,
   },
   {
@@ -1107,10 +1188,18 @@ const CHARACTERS = [
     cardLabel: 'Unicorn',
     preview: `<svg viewBox='0 0 64 64'>
       <ellipse cx='32' cy='33' rx='18' ry='16' fill='#f5f0ff'/>
-      <circle cx='29' cy='20' r='12' fill='#f5f0ff'/>
-      <path d='M24 8 31 18 27 18Z' fill='#ffd166'/>
-      <path d='M18 20 24 10 29 20Z' fill='#ff9fd3'/>
-      <circle cx='25' cy='21' r='2.8' fill='#2b3147'/>
+      <circle cx='30' cy='21' r='12' fill='#f5f0ff'/>
+      <path d='M28 7 33 19 30 19Z' fill='#ffd166'/>
+      <path d='M16 21 Q22 7 30 19Z' fill='#ff9fd3'/>
+      <path d='M44 21 Q38 7 30 19Z' fill='#c9aff4'/>
+      <path d='M19 17 Q25 13 30 17' stroke='#a88acc' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M30 17 Q35 13 40 17' stroke='#a88acc' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='25' cy='22' r='2.8' fill='#2b3147'/>
+      <circle cx='35' cy='22' r='2.8' fill='#2b3147'/>
+      <circle cx='26' cy='20' r='1.2' fill='white'/>
+      <circle cx='36' cy='20' r='1.2' fill='white'/>
+      <ellipse cx='18' cy='27' rx='3.5' ry='2.5' fill='#ffb3d1' opacity='0.7'/>
+      <ellipse cx='42' cy='27' rx='3.5' ry='2.5' fill='#ffb3d1' opacity='0.7'/>
     </svg>`,
   },
   {
@@ -1120,6 +1209,14 @@ const CHARACTERS = [
     preview: `<svg viewBox='0 0 64 64'>
       <circle cx='32' cy='19' r='12' fill='#f3c5a0'/>
       <path d='M19 17 Q32 3 45 17V22H19Z' fill='#5d4639'/>
+      <path d='M26 16 Q29 13 32 16' stroke='#4a362b' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M32 16 Q35 13 38 16' stroke='#4a362b' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='28' cy='21' r='2.8' fill='#243047'/>
+      <circle cx='36' cy='21' r='2.8' fill='#243047'/>
+      <circle cx='29' cy='19' r='1.1' fill='white'/>
+      <circle cx='37' cy='19' r='1.1' fill='white'/>
+      <ellipse cx='23' cy='25' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='41' cy='25' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
       <rect x='20' y='31' width='24' height='18' rx='8' fill='#5ca7f7'/>
       <path d='M32 31 26 43H38Z' fill='#ffcc66'/>
     </svg>`,
@@ -1130,6 +1227,12 @@ const CHARACTERS = [
     cardLabel: 'Anpanman',
     preview: `<svg viewBox='0 0 64 64'>
       <circle cx='32' cy='24' r='16' fill='#e98b50'/>
+      <path d='M24 17 Q27 14 30 17' stroke='#9c4520' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M34 17 Q37 14 40 17' stroke='#9c4520' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='27' cy='21' r='2.8' fill='#243047'/>
+      <circle cx='37' cy='21' r='2.8' fill='#243047'/>
+      <circle cx='28' cy='19' r='1.2' fill='white'/>
+      <circle cx='38' cy='19' r='1.2' fill='white'/>
       <circle cx='24' cy='26' r='4.5' fill='#ef5f4b'/>
       <circle cx='40' cy='26' r='4.5' fill='#ef5f4b'/>
       <circle cx='32' cy='24' r='5' fill='#d44738'/>
@@ -1144,6 +1247,14 @@ const CHARACTERS = [
     preview: `<svg viewBox='0 0 64 64'>
       <path d='M17 19 26 5 31 18 36 6 44 18 50 11 51 25 13 25Z' fill='#1d2232'/>
       <circle cx='32' cy='26' r='12' fill='#f0bc92'/>
+      <path d='M26 22 Q29 19 32 22' stroke='#1d2232' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M32 22 Q35 19 38 22' stroke='#1d2232' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='28' cy='26' r='2.8' fill='#243047'/>
+      <circle cx='36' cy='26' r='2.8' fill='#243047'/>
+      <circle cx='29' cy='24' r='1.1' fill='white'/>
+      <circle cx='37' cy='24' r='1.1' fill='white'/>
+      <ellipse cx='22' cy='30' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='42' cy='30' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
       <rect x='20' y='40' width='24' height='12' rx='6' fill='#f1912b'/>
       <path d='M32 40 25 52H39Z' fill='#2d5fbb'/>
     </svg>`,
@@ -1156,8 +1267,14 @@ const CHARACTERS = [
       <path d='M16 16 24 10 22 22ZM48 16 40 10 42 22Z' fill='#181521'/>
       <path d='M15 24 Q18 10 32 10 Q46 10 49 24V33H15Z' fill='#f2a6b8'/>
       <circle cx='32' cy='27' r='12' fill='#f5d0b0'/>
+      <path d='M23 22 Q27 18 31 22' stroke='#181521' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M33 22 Q37 18 41 22' stroke='#181521' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='27' cy='27' r='3.5' fill='#4aa57d'/><circle cx='37' cy='27' r='3.5' fill='#4aa57d'/>
+      <circle cx='27' cy='27' r='1.5' fill='#243047'/><circle cx='37' cy='27' r='1.5' fill='#243047'/>
+      <circle cx='28' cy='25' r='1' fill='white'/><circle cx='38' cy='25' r='1' fill='white'/>
+      <ellipse cx='21' cy='31' rx='3' ry='2' fill='#f4a0b0' opacity='0.6'/>
+      <ellipse cx='43' cy='31' rx='3' ry='2' fill='#f4a0b0' opacity='0.6'/>
       <rect x='22' y='41' width='20' height='12' rx='6' fill='#181521'/>
-      <circle cx='27' cy='27' r='3' fill='#4aa57d'/><circle cx='37' cy='27' r='3' fill='#4aa57d'/>
     </svg>`,
   },
   {
@@ -1167,6 +1284,14 @@ const CHARACTERS = [
     preview: `<svg viewBox='0 0 64 64'>
       <path d='M18 18 Q24 8 32 8 Q40 8 46 18V23H18Z' fill='#1c2231'/>
       <circle cx='32' cy='25' r='12' fill='#f2c397'/>
+      <path d='M25 19 Q28 16 31 19' stroke='#1c2231' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <path d='M33 19 Q36 16 39 19' stroke='#1c2231' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+      <circle cx='28' cy='24' r='2.8' fill='#243047'/>
+      <circle cx='36' cy='24' r='2.8' fill='#243047'/>
+      <circle cx='29' cy='22' r='1.1' fill='white'/>
+      <circle cx='37' cy='22' r='1.1' fill='white'/>
+      <ellipse cx='22' cy='28' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='42' cy='28' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
       <rect x='20' y='39' width='24' height='12' rx='6' fill='#d63b38'/>
       <rect x='23' y='51' width='18' height='4' rx='2' fill='#2c6cc3'/>
     </svg>`,
@@ -1178,9 +1303,12 @@ const CHARACTERS = [
     preview: `<svg viewBox='0 0 64 64'>
       <circle cx='32' cy='23' r='14' fill='white'/>
       <path d='M18 18 24 8 29 18ZM46 18 40 8 35 18Z' fill='white'/>
-      <circle cx='27' cy='23' r='2.4' fill='#1f2637'/><circle cx='37' cy='23' r='2.4' fill='#1f2637'/>
-      <ellipse cx='32' cy='27' rx='3.5' ry='2.8' fill='#ffd24d'/>
       <path d='M38 13 44 10 46 16 40 19Z' fill='#ef4f63'/>
+      <circle cx='27' cy='23' r='2.4' fill='#1f2637'/><circle cx='37' cy='23' r='2.4' fill='#1f2637'/>
+      <circle cx='28' cy='21' r='1' fill='white'/><circle cx='38' cy='21' r='1' fill='white'/>
+      <ellipse cx='32' cy='27' rx='3.5' ry='2.8' fill='#ffd24d'/>
+      <ellipse cx='20' cy='28' rx='3.5' ry='2.5' fill='#ffb3c6' opacity='0.75'/>
+      <ellipse cx='44' cy='28' rx='3.5' ry='2.5' fill='#ffb3c6' opacity='0.75'/>
       <rect x='21' y='40' width='22' height='12' rx='6' fill='#5ca7f7'/>
     </svg>`,
   },
@@ -1191,7 +1319,18 @@ const CHARACTERS = [
     preview: `<svg viewBox='0 0 64 64'>
       <circle cx='32' cy='23' r='15' fill='#f5d3b2'/>
       <path d='M16 23 Q18 7 32 7 Q46 7 48 23L44 19 44 32 20 32 20 19Z' fill='#121622'/>
-      <ellipse cx='26' cy='24' rx='4.5' ry='6' fill='#6fd24e'/><ellipse cx='38' cy='24' rx='4.5' ry='6' fill='#6fd24e'/>
+      <path d='M22 18 Q26 15 30 18' stroke='#121622' stroke-width='2' fill='none' stroke-linecap='round'/>
+      <path d='M34 18 Q38 15 42 18' stroke='#121622' stroke-width='2' fill='none' stroke-linecap='round'/>
+      <ellipse cx='26' cy='24' rx='4.5' ry='6' fill='white'/>
+      <ellipse cx='38' cy='24' rx='4.5' ry='6' fill='white'/>
+      <ellipse cx='26' cy='24' rx='3' ry='4.5' fill='#6fd24e'/>
+      <ellipse cx='38' cy='24' rx='3' ry='4.5' fill='#6fd24e'/>
+      <circle cx='26' cy='24' r='1.8' fill='#121622'/>
+      <circle cx='38' cy='24' r='1.8' fill='#121622'/>
+      <circle cx='27' cy='22' r='1' fill='white'/>
+      <circle cx='39' cy='22' r='1' fill='white'/>
+      <ellipse cx='21' cy='29' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='43' cy='29' rx='3' ry='2' fill='#e8a878' opacity='0.55'/>
       <rect x='22' y='40' width='20' height='11' rx='5' fill='#67c84f'/>
       <rect x='22' y='45' width='20' height='3' fill='white'/>
     </svg>`,
@@ -2185,9 +2324,9 @@ function updateHint() {
   const hint = document.getElementById('lets-hint');
   if (!hint) return;
   if (worn.size === 0) {
-    hint.innerHTML = '「<em>Put on your …</em>」と いって みよう！';
+    hint.innerHTML = '「<em>Put on your …</em>」と いって みよう！<div class="hint-sub">🎤 ボタン を おして スタート！</div>';
   } else {
-    hint.innerHTML = '「<em>レッツ…！</em>」と いって みよう！';
+    hint.innerHTML = '「<em>レッツ…！</em>」と いって みよう！<div class="hint-sub">🎤 ボタン を おして はなそう！</div>';
   }
 }
 
@@ -2951,12 +3090,16 @@ const CHARACTER_SVGS = {
       <rect x='88' y='90' width='44' height='16' rx='6' fill='#5AACCF'/>
     </g>
     <g>
+      <rect x='77' y='36' width='18' height='4' rx='2' fill='#5AACCF'/>
+      <rect x='125' y='36' width='18' height='4' rx='2' fill='#5AACCF'/>
       <circle cx='86' cy='50' r='13' fill='white'/>
       <circle cx='134' cy='50' r='13' fill='white'/>
       <circle cx='88' cy='52' r='7.5' fill='#2D3142'/>
       <circle cx='136' cy='52' r='7.5' fill='#2D3142'/>
       <circle cx='90' cy='49' r='3' fill='white'/>
       <circle cx='138' cy='49' r='3' fill='white'/>
+      <ellipse cx='70' cy='64' rx='9' ry='7' fill='#a8dcea' opacity='0.55'/>
+      <ellipse cx='150' cy='64' rx='9' ry='7' fill='#a8dcea' opacity='0.55'/>
       <path id='character-mouth' d='M 83 72 Q 110 80 137 72' stroke='#2D3142' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
@@ -3000,8 +3143,16 @@ const CHARACTER_SVGS = {
       <ellipse cx='120' cy='85' rx='32' ry='24' fill='#f7d9b1'/>
     </g>
     <g>
-      <ellipse cx='92' cy='68' rx='8' ry='10' fill='#243047'/>
-      <ellipse cx='148' cy='68' rx='8' ry='10' fill='#243047'/>
+      <path d='M82 55 Q92 49 102 55' stroke='#5d4020' stroke-width='3' fill='none' stroke-linecap='round'/>
+      <path d='M138 55 Q148 49 158 55' stroke='#5d4020' stroke-width='3' fill='none' stroke-linecap='round'/>
+      <ellipse cx='92' cy='68' rx='8' ry='10' fill='#b8760a'/>
+      <ellipse cx='148' cy='68' rx='8' ry='10' fill='#b8760a'/>
+      <ellipse cx='92' cy='68' rx='3' ry='9' fill='#1a2030'/>
+      <ellipse cx='148' cy='68' rx='3' ry='9' fill='#1a2030'/>
+      <circle cx='95' cy='63' r='2.5' fill='white'/>
+      <circle cx='151' cy='63' r='2.5' fill='white'/>
+      <ellipse cx='72' cy='83' rx='11' ry='8' fill='#f4a0b0' opacity='0.55'/>
+      <ellipse cx='168' cy='83' rx='11' ry='8' fill='#f4a0b0' opacity='0.55'/>
       <path d='M118 82 110 91 120 95 130 91Z' fill='#f08ca8'/>
       <path id='character-mouth' d='M 96 102 Q 120 110 144 102' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
       <line x1='82' y1='88' x2='54' y2='82' stroke='#243047' stroke-width='2.5' stroke-linecap='round'/>
@@ -3046,10 +3197,16 @@ const CHARACTER_SVGS = {
       <ellipse cx='118' cy='70' rx='50' ry='44' fill='#7ccf73'/>
       <ellipse cx='135' cy='82' rx='28' ry='20' fill='#b9eb92'/>
       <path d='M160 70 196 84 164 96Z' fill='#7ccf73'/>
+      <path d='M82 55 Q92 50 102 56' stroke='#3a8a34' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+      <path d='M142 55 Q152 50 162 56' stroke='#3a8a34' stroke-width='3.5' fill='none' stroke-linecap='round'/>
       <circle cx='92' cy='68' r='7' fill='white'/>
       <circle cx='152' cy='68' r='7' fill='white'/>
       <circle cx='92' cy='69' r='4' fill='#243047'/>
       <circle cx='152' cy='69' r='4' fill='#243047'/>
+      <circle cx='94' cy='66' r='2' fill='white'/>
+      <circle cx='154' cy='66' r='2' fill='white'/>
+      <ellipse cx='74' cy='82' rx='10' ry='7' fill='#9ae87a' opacity='0.55'/>
+      <ellipse cx='162' cy='82' rx='10' ry='7' fill='#9ae87a' opacity='0.55'/>
       <path id='character-mouth' d='M 98 103 Q 122 110 144 101' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
@@ -3092,8 +3249,18 @@ const CHARACTER_SVGS = {
       <circle cx='88' cy='8' r='5' fill='#ff6b6b'/>
       <circle cx='152' cy='8' r='5' fill='#ffd166'/>
       <ellipse cx='120' cy='66' rx='54' ry='48' fill='#8ce7ce'/>
+      <path d='M80 50 Q92 44 104 50' stroke='#45a898' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+      <path d='M136 50 Q148 44 160 50' stroke='#45a898' stroke-width='2.5' fill='none' stroke-linecap='round'/>
       <ellipse cx='92' cy='70' rx='11' ry='17' fill='#243047'/>
       <ellipse cx='148' cy='70' rx='11' ry='17' fill='#243047'/>
+      <ellipse cx='92' cy='70' rx='7' ry='12' fill='#2db8a0'/>
+      <ellipse cx='148' cy='70' rx='7' ry='12' fill='#2db8a0'/>
+      <circle cx='92' cy='70' r='4' fill='#1a1f2e'/>
+      <circle cx='148' cy='70' r='4' fill='#1a1f2e'/>
+      <circle cx='95' cy='65' r='2.5' fill='white'/>
+      <circle cx='151' cy='65' r='2.5' fill='white'/>
+      <ellipse cx='74' cy='82' rx='10' ry='7' fill='#7dd9c0' opacity='0.5'/>
+      <ellipse cx='166' cy='82' rx='10' ry='7' fill='#7dd9c0' opacity='0.5'/>
       <path id='character-mouth' d='M 96 101 Q 120 112 144 101' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
@@ -3135,8 +3302,14 @@ const CHARACTER_SVGS = {
       <circle cx='72' cy='68' r='9' fill='#dcb38a'/>
       <circle cx='168' cy='68' r='9' fill='#dcb38a'/>
       <ellipse cx='120' cy='84' rx='34' ry='27' fill='#dcb38a'/>
+      <path d='M82 54 Q92 48 102 54' stroke='#5a3220' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+      <path d='M138 54 Q148 48 158 54' stroke='#5a3220' stroke-width='3.5' fill='none' stroke-linecap='round'/>
       <circle cx='92' cy='68' r='6' fill='#243047'/>
       <circle cx='148' cy='68' r='6' fill='#243047'/>
+      <circle cx='94' cy='65' r='2.2' fill='white'/>
+      <circle cx='150' cy='65' r='2.2' fill='white'/>
+      <ellipse cx='76' cy='82' rx='10' ry='7' fill='#e8a070' opacity='0.5'/>
+      <ellipse cx='164' cy='82' rx='10' ry='7' fill='#e8a070' opacity='0.5'/>
       <ellipse cx='120' cy='84' rx='6' ry='4' fill='#6e432a'/>
       <path id='character-mouth' d='M 98 102 Q 120 112 142 102' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
@@ -3172,8 +3345,14 @@ const CHARACTER_SVGS = {
     <g>
       <circle cx='120' cy='72' r='46' fill='#2f374d'/>
       <ellipse cx='120' cy='78' rx='30' ry='24' fill='white'/>
+      <path d='M84 55 Q94 49 104 55' stroke='#1a2030' stroke-width='3' fill='none' stroke-linecap='round'/>
+      <path d='M136 55 Q146 49 156 55' stroke='#1a2030' stroke-width='3' fill='none' stroke-linecap='round'/>
       <ellipse cx='94' cy='66' rx='8' ry='12' fill='#1f2637'/>
       <ellipse cx='146' cy='66' rx='8' ry='12' fill='#1f2637'/>
+      <circle cx='97' cy='61' r='2.8' fill='white'/>
+      <circle cx='149' cy='61' r='2.8' fill='white'/>
+      <ellipse cx='98' cy='84' rx='9' ry='6' fill='#ffb080' opacity='0.55'/>
+      <ellipse cx='142' cy='84' rx='9' ry='6' fill='#ffb080' opacity='0.55'/>
       <path d='M120 80 108 90 120 96 132 90Z' fill='#ffb347'/>
       <path id='character-mouth' d='M 98 104 Q 120 110 142 104' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
@@ -3214,8 +3393,14 @@ const CHARACTER_SVGS = {
     <g>
       <circle cx='120' cy='70' r='50' fill='#56c06f'/>
       <path d='M86 30 94 18 100 34M154 30 146 18 140 34' stroke='#f5c56b' stroke-width='6' stroke-linecap='round'/>
+      <path d='M78 53 Q90 47 100 54' stroke='#2d7042' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+      <path d='M140 53 Q152 47 162 54' stroke='#2d7042' stroke-width='3.5' fill='none' stroke-linecap='round'/>
       <ellipse cx='90' cy='68' rx='8' ry='10' fill='#243047'/>
       <ellipse cx='150' cy='68' rx='8' ry='10' fill='#243047'/>
+      <circle cx='93' cy='63' r='2.8' fill='white'/>
+      <circle cx='153' cy='63' r='2.8' fill='white'/>
+      <ellipse cx='72' cy='82' rx='10' ry='7' fill='#8af09e' opacity='0.5'/>
+      <ellipse cx='166' cy='82' rx='10' ry='7' fill='#8af09e' opacity='0.5'/>
       <path d='M120 76 110 88 120 90 130 88Z' fill='#ffd166'/>
       <path id='character-mouth' d='M 96 102 Q 120 114 144 102' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
@@ -3258,8 +3443,14 @@ const CHARACTER_SVGS = {
       <path d='M78 54 92 28 104 54Z' fill='#f5f0ff'/>
       <path d='M162 54 148 28 136 54Z' fill='#f5f0ff'/>
       <path d='M80 58 Q94 22 118 40 Q100 66 98 102' stroke='#ff9fd3' stroke-width='10' fill='none' stroke-linecap='round'/>
+      <path d='M82 56 Q92 50 102 56' stroke='#a88acc' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+      <path d='M138 56 Q148 50 158 56' stroke='#a88acc' stroke-width='2.5' fill='none' stroke-linecap='round'/>
       <circle cx='92' cy='70' r='6' fill='#243047'/>
       <circle cx='148' cy='70' r='6' fill='#243047'/>
+      <circle cx='95' cy='66' r='2.2' fill='white'/>
+      <circle cx='151' cy='66' r='2.2' fill='white'/>
+      <ellipse cx='74' cy='84' rx='11' ry='8' fill='#f4b0d8' opacity='0.55'/>
+      <ellipse cx='166' cy='84' rx='11' ry='8' fill='#f4b0d8' opacity='0.55'/>
       <path id='character-mouth' d='M 98 102 Q 120 112 142 102' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
@@ -3298,8 +3489,14 @@ const CHARACTER_SVGS = {
       <circle cx='120' cy='70' r='46' fill='#f3c5a0'/>
       <path d='M74 58 Q76 20 120 18 Q164 20 166 58 V72 H74Z' fill='#5d4639'/>
       <path d='M90 34 Q120 16 150 34' stroke='#4b362b' stroke-width='10' stroke-linecap='round'/>
+      <path d='M83 58 Q92 53 101 58' stroke='#4b362b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+      <path d='M139 58 Q148 53 157 58' stroke='#4b362b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
       <circle cx='92' cy='70' r='6' fill='#243047'/>
       <circle cx='148' cy='70' r='6' fill='#243047'/>
+      <circle cx='95' cy='67' r='2.2' fill='white'/>
+      <circle cx='151' cy='67' r='2.2' fill='white'/>
+      <ellipse cx='76' cy='82' rx='10' ry='7' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='164' cy='82' rx='10' ry='7' fill='#e8a878' opacity='0.55'/>
       <path d='M120 78 116 92H124Z' fill='#e2ab84'/>
       <path id='character-mouth' d='M 98 102 Q 120 111 142 102' stroke='#243047' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
@@ -3338,8 +3535,12 @@ const CHARACTER_SVGS = {
     </g>
     <g>
       <circle cx='120' cy='72' r='52' fill='#e98b50'/>
+      <path d='M82 54 Q92 48 102 54' stroke='#a85020' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+      <path d='M138 54 Q148 48 158 54' stroke='#a85020' stroke-width='3.5' fill='none' stroke-linecap='round'/>
       <circle cx='92' cy='68' r='6' fill='#243047'/>
       <circle cx='148' cy='68' r='6' fill='#243047'/>
+      <circle cx='95' cy='65' r='2.2' fill='white'/>
+      <circle cx='151' cy='65' r='2.2' fill='white'/>
       <circle cx='120' cy='72' r='11' fill='#d44738'/>
       <circle cx='88' cy='86' r='10' fill='#ef5f4b'/>
       <circle cx='152' cy='86' r='10' fill='#ef5f4b'/>
@@ -3382,8 +3583,14 @@ const CHARACTER_SVGS = {
     <g>
       <path d='M76 56 90 26 100 48 112 18 124 46 136 16 150 48 166 28 168 76 72 76Z' fill='#1d2232'/>
       <circle cx='120' cy='78' r='42' fill='#f0bc92'/>
+      <path d='M87 65 Q96 59 105 65' stroke='#1d2232' stroke-width='3' fill='none' stroke-linecap='round'/>
+      <path d='M135 65 Q144 59 153 65' stroke='#1d2232' stroke-width='3' fill='none' stroke-linecap='round'/>
       <circle cx='96' cy='76' r='6' fill='#243047'/>
       <circle cx='144' cy='76' r='6' fill='#243047'/>
+      <circle cx='99' cy='73' r='2.2' fill='white'/>
+      <circle cx='147' cy='73' r='2.2' fill='white'/>
+      <ellipse cx='79' cy='88' rx='10' ry='7' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='161' cy='88' rx='10' ry='7' fill='#e8a878' opacity='0.55'/>
       <line x1='99' y1='88' x2='94' y2='96' stroke='#9b634a' stroke-width='2.5' stroke-linecap='round'/>
       <path id='character-mouth' d='M 98 102 Q 120 111 142 102' stroke='#7f3d2f' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
@@ -3428,10 +3635,16 @@ const CHARACTER_SVGS = {
         <circle cx='120' cy='78' r='42' fill='#f5d0b0'/>
         <path d='M78 72 Q84 40 108 40 Q94 70 96 100Z' fill='#f2a6b8'/>
         <path d='M162 72 Q156 40 132 40 Q146 70 144 100Z' fill='#f2a6b8'/>
+        <path d='M88 63 Q98 57 108 63' stroke='#181521' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+        <path d='M132 63 Q142 57 152 63' stroke='#181521' stroke-width='2.5' fill='none' stroke-linecap='round'/>
         <ellipse cx='98' cy='76' rx='10' ry='13' fill='#4aa57d'/>
         <ellipse cx='142' cy='76' rx='10' ry='13' fill='#4aa57d'/>
         <circle cx='100' cy='78' r='3.2' fill='#243047'/>
         <circle cx='144' cy='78' r='3.2' fill='#243047'/>
+        <circle cx='103' cy='74' r='2' fill='white'/>
+        <circle cx='147' cy='74' r='2' fill='white'/>
+        <ellipse cx='80' cy='92' rx='11' ry='8' fill='#f4a0b0' opacity='0.5'/>
+        <ellipse cx='160' cy='92' rx='11' ry='8' fill='#f4a0b0' opacity='0.5'/>
         <path id='character-mouth' d='M 102 104 Q 120 113 138 104' stroke='#9f5d66' stroke-width='3' fill='none' stroke-linecap='round'/>
       </g>
       ${CLOTHING.glasses}
@@ -3470,8 +3683,14 @@ const CHARACTER_SVGS = {
     <g>
       <path d='M78 58 Q88 24 120 24 Q152 24 162 58V78H78Z' fill='#1c2231'/>
       <circle cx='120' cy='80' r='42' fill='#f2c397'/>
+      <path d='M87 66 Q96 60 105 66' stroke='#1c2231' stroke-width='3' fill='none' stroke-linecap='round'/>
+      <path d='M135 66 Q144 60 153 66' stroke='#1c2231' stroke-width='3' fill='none' stroke-linecap='round'/>
       <circle cx='96' cy='76' r='6' fill='#243047'/>
       <circle cx='144' cy='76' r='6' fill='#243047'/>
+      <circle cx='99' cy='73' r='2.2' fill='white'/>
+      <circle cx='147' cy='73' r='2.2' fill='white'/>
+      <ellipse cx='79' cy='88' rx='10' ry='7' fill='#e8a878' opacity='0.55'/>
+      <ellipse cx='161' cy='88' rx='10' ry='7' fill='#e8a878' opacity='0.55'/>
       <line x1='101' y1='88' x2='97' y2='95' stroke='#9d5f52' stroke-width='2.5' stroke-linecap='round'/>
       <path id='character-mouth' d='M 98 102 Q 120 112 142 102' stroke='#8f4233' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
@@ -3515,6 +3734,10 @@ const CHARACTER_SVGS = {
       <path d='M142 40 156 30 162 42 148 52Z' fill='#ef4f63'/>
       <circle cx='98' cy='76' r='5' fill='#243047'/>
       <circle cx='142' cy='76' r='5' fill='#243047'/>
+      <circle cx='100' cy='73' r='2' fill='white'/>
+      <circle cx='144' cy='73' r='2' fill='white'/>
+      <ellipse cx='82' cy='90' rx='12' ry='8' fill='#ffb3c6' opacity='0.72'/>
+      <ellipse cx='158' cy='90' rx='12' ry='8' fill='#ffb3c6' opacity='0.72'/>
       <ellipse cx='120' cy='86' rx='7' ry='5' fill='#ffd24d'/>
       <path id='character-mouth' d='M 106 102 Q 120 108 134 102' stroke='#b78853' stroke-width='2.8' fill='none' stroke-linecap='round'/>
       <line x1='90' y1='88' x2='66' y2='84' stroke='#243047' stroke-width='2.5' stroke-linecap='round'/>
@@ -3557,12 +3780,18 @@ const CHARACTER_SVGS = {
     <g>
       <circle cx='120' cy='78' r='56' fill='#f5d3b2'/>
       <path d='M64 78 Q68 18 120 18 Q172 18 176 78L162 62V98H78V62Z' fill='#121622'/>
+      <path d='M82 68 Q94 62 106 68' stroke='#121622' stroke-width='4' fill='none' stroke-linecap='round'/>
+      <path d='M134 68 Q146 62 158 68' stroke='#121622' stroke-width='4' fill='none' stroke-linecap='round'/>
       <ellipse cx='94' cy='82' rx='15' ry='18' fill='white'/>
       <ellipse cx='146' cy='82' rx='15' ry='18' fill='white'/>
       <ellipse cx='94' cy='82' rx='10' ry='13' fill='#6fd24e'/>
       <ellipse cx='146' cy='82' rx='10' ry='13' fill='#6fd24e'/>
       <circle cx='96' cy='83' r='4' fill='#121622'/>
       <circle cx='148' cy='83' r='4' fill='#121622'/>
+      <circle cx='99' cy='79' r='2.2' fill='white'/>
+      <circle cx='151' cy='79' r='2.2' fill='white'/>
+      <ellipse cx='74' cy='96' rx='12' ry='8' fill='#e8a878' opacity='0.5'/>
+      <ellipse cx='166' cy='96' rx='12' ry='8' fill='#e8a878' opacity='0.5'/>
       <path id='character-mouth' d='M 102 108 Q 120 118 138 108' stroke='#7a4540' stroke-width='3' fill='none' stroke-linecap='round'/>
     </g>
     ${CLOTHING.glasses}
@@ -3605,6 +3834,10 @@ const CHARACTER_SVGS = {
       <ellipse cx='138' cy='70' rx='12' ry='16' fill='white'/>
       <circle cx='104' cy='72' r='4.5' fill='#243047'/>
       <circle cx='140' cy='72' r='4.5' fill='#243047'/>
+      <circle cx='106' cy='69' r='2' fill='white'/>
+      <circle cx='142' cy='69' r='2' fill='white'/>
+      <ellipse cx='86' cy='88' rx='10' ry='7' fill='#ff9faa' opacity='0.5'/>
+      <ellipse cx='154' cy='88' rx='10' ry='7' fill='#ff9faa' opacity='0.5'/>
       <circle cx='120' cy='84' r='8' fill='#ef4f63'/>
       <path id='character-mouth' d='M 98 104 Q 120 116 142 104' stroke='#8f4233' stroke-width='3' fill='none' stroke-linecap='round'/>
       <line x1='98' y1='88' x2='74' y2='84' stroke='#243047' stroke-width='2.2' stroke-linecap='round'/>
@@ -3646,6 +3879,8 @@ const CHARACTER_SVGS = {
       <circle cx='120' cy='86' r='54' fill='#f7a0cf'/>
       <ellipse cx='96' cy='82' rx='8' ry='12' fill='#243047'/>
       <ellipse cx='144' cy='82' rx='8' ry='12' fill='#243047'/>
+      <circle cx='99' cy='77' r='3' fill='white'/>
+      <circle cx='147' cy='77' r='3' fill='white'/>
       <circle cx='86' cy='96' r='7' fill='#ef7db0' opacity='0.85'/>
       <circle cx='154' cy='96' r='7' fill='#ef7db0' opacity='0.85'/>
       <path id='character-mouth' d='M 104 106 Q 120 118 136 106' stroke='#b64f7b' stroke-width='3' fill='none' stroke-linecap='round'/>
