@@ -330,8 +330,8 @@ header p {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.96);
   color: var(--ink);
-  cursor: default;
-  pointer-events: none;
+  cursor: pointer;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1709,6 +1709,7 @@ function buildShoeContent(variantIndex, partId) {
 
 let currentCharacter = CHARACTERS[0].id;
 let worn = new Set();
+let soundOn = true;
 let audioCtx = null;
 let mouth = null;
 let sparkles = null;
@@ -1772,7 +1773,9 @@ resetButton.addEventListener('click', () => {
   clearOutfit({ rerender: true });
   resetSpeechFeedback();
   say(UI_TEXT.resetPrompt);
-  tone(330);
+  if (soundOn) {
+    tone(330);
+  }
 });
 
 micButton.addEventListener('click', handleMicButtonClick);
@@ -1807,9 +1810,9 @@ function buildClothingButtons() {
     button.type = 'button';
     button.dataset.id = item.id;
     button.setAttribute('aria-pressed', 'false');
-    button.setAttribute('aria-disabled', 'true');
-    button.tabIndex = -1;
+    button.setAttribute('aria-disabled', 'false');
     button.innerHTML = buildItemButtonMarkup(item);
+    button.addEventListener('click', () => handleItemCardClick(item));
     grid.appendChild(button);
   });
 }
@@ -2141,16 +2144,13 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
     }
 
     speechSessionHandled = true;
-    say('What?');
-    speak('What?');
+    recognizedValue.textContent = UI_TEXT.tryAgain;
+    say(UI_TEXT.tryAgain);
     return false;
   }
 
   const finishTranscriptIndex = normalizedCandidates.findIndex((value) => /^let'?s\s+\w+/i.test(value));
   if (finishTranscriptIndex !== -1) {
-    if (!isFinal) {
-      return false;
-    }
     const display = candidates[finishTranscriptIndex].charAt(0).toUpperCase() + candidates[finishTranscriptIndex].slice(1);
     speechSessionHandled = true;
     handleFinish(display);
@@ -2158,16 +2158,14 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
   }
 
   const item = findSpeechItem(normalizedCandidates);
-  const hasPutOn = normalizedCandidates.some((c) => c.includes('put on'));
-  if (!item || !hasPutOn) {
+  if (!item) {
     if (!isFinal) {
       return false;
     }
 
     speechSessionHandled = true;
     recognizedValue.textContent = candidates[0];
-    say('What?');
-    speak('What?');
+    say(UI_TEXT.tryAgain);
     return false;
   }
 
@@ -2181,7 +2179,9 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
   const successMessage = `いいね！${item.label}を つけたよ。`;
   say(successMessage);
-  tone(680);
+  if (soundOn) {
+    tone(680);
+  }
   return true;
 }
 
@@ -2211,6 +2211,19 @@ function flashItemButton(itemId) {
   void button.offsetWidth;
   button.classList.add('voice-hit');
   button.addEventListener('animationend', () => button.classList.remove('voice-hit'), { once: true });
+}
+
+function handleItemCardClick(item) {
+  if (celebrationMode) {
+    return;
+  }
+
+  flashItemButton(item.id);
+  say(item.cardLabel);
+  if (soundOn) {
+    tone(520);
+    speak(item.cardLabel);
+  }
 }
 
 function chooseCharacter(characterId) {
@@ -2320,9 +2333,9 @@ function toggleItem(item, options = {}) {
     if (announce) {
       say(item.takeOff);
     }
-    if (audioFeedback) {
+    if (audioFeedback && soundOn) {
       tone(360);
-      speak(item.cardLabel);
+      speak(item.speakTakeOff || item.takeOff);
     }
   } else {
     worn.add(item.id);
@@ -2340,9 +2353,9 @@ function toggleItem(item, options = {}) {
     if (announce) {
       say(item.putOn);
     }
-    if (audioFeedback) {
+    if (audioFeedback && soundOn) {
       tone(680);
-      speak(item.cardLabel);
+      speak(item.speakPutOn || item.putOn);
     }
   }
 
@@ -2657,8 +2670,10 @@ function handleFinish(bubbleText) {
     finishButton.classList.remove('alert');
     void finishButton.offsetWidth;
     finishButton.classList.add('alert');
-    tone(240);
-    speak(SPEECH_TEXT.emptyFinish);
+    if (soundOn) {
+      tone(240);
+      speak(SPEECH_TEXT.emptyFinish);
+    }
     return;
   }
 
@@ -2673,8 +2688,10 @@ function handleFinish(bubbleText) {
   say(wearSentence);
   spawnConfetti();
 
-  tone(780);
-  speak(finishSpeech);
+  if (soundOn) {
+    tone(780);
+    speak(finishSpeech);
+  }
 
   characterSlot.classList.add('waving');
   queueTask(() => {
