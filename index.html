@@ -2833,6 +2833,16 @@ function updateMouth(mode = 'auto') {
     } else {
       path = 'M 80 67 Q 110 90 140 67';
     }
+  } else if (currentCharacter === 'kirby') {
+    if (mode === 'ready') {
+      path = 'M 106 170 Q 120 194 134 170';
+    } else if (worn.size === 0) {
+      path = 'M 108 172 Q 120 182 132 172';
+    } else if (worn.size <= 3) {
+      path = 'M 107 171 Q 120 188 133 171';
+    } else {
+      path = 'M 105 169 Q 120 194 135 169';
+    }
   } else if (mode === 'ready') {
     path = 'M 94 100 Q 120 116 146 100';
   } else if (worn.size === 0) {
