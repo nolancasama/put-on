@@ -2141,8 +2141,8 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
     }
 
     speechSessionHandled = true;
-    recognizedValue.textContent = UI_TEXT.tryAgain;
-    say(UI_TEXT.tryAgain);
+    say('What?');
+    speak('What?');
     return false;
   }
 
@@ -2158,14 +2158,16 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
   }
 
   const item = findSpeechItem(normalizedCandidates);
-  if (!item) {
+  const hasPutOn = normalizedCandidates.some((c) => c.includes('put on'));
+  if (!item || !hasPutOn) {
     if (!isFinal) {
       return false;
     }
 
     speechSessionHandled = true;
     recognizedValue.textContent = candidates[0];
-    say(UI_TEXT.tryAgain);
+    say('What?');
+    speak('What?');
     return false;
   }
 
