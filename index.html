@@ -192,17 +192,6 @@ header p {
   border-top: 5px dashed rgba(126, 93, 47, 0.26);
 }
 
-.stage-label {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--muted);
-  font-size: 0.92rem;
-  box-shadow: 0 8px 16px rgba(43, 49, 71, 0.08);
-}
 
 .walk-track {
   position: absolute;
@@ -450,20 +439,6 @@ header p {
   color: var(--accent);
 }
 
-footer {
-  padding: 0 24px 24px;
-}
-
-#sentence {
-  min-height: 74px;
-  background: rgba(43, 49, 71, 0.94);
-  color: white;
-  border-radius: 24px;
-  padding: 18px 22px;
-  font-size: clamp(1rem, 2.2vw, 1.28rem);
-  line-height: 1.4;
-  box-shadow: 0 10px 24px rgba(43, 49, 71, 0.2);
-}
 
 .clothing {
   transform-box: fill-box;
@@ -706,12 +681,8 @@ footer {
     padding-inline: 18px;
   }
 
-  .main,
-  footer {
-    padding-inline: 16px;
-  }
-
   .main {
+    padding-inline: 16px;
     padding-bottom: 16px;
   }
 
@@ -746,7 +717,6 @@ footer {
     <div class="selector-grid" id="character-selector" role="group" aria-label="キャラクターえらび"></div>
 
     <div class="stage-wrap">
-      <div class="stage-label">ふくを きせたら、「できあがり」を おしてね。</div>
       <div class="walk-track" id="walk-track">
         <div class="character-slot" id="character-slot">
           <div class="speech-bubble" id="speech-bubble" hidden>じゅんび できた！</div>
@@ -784,14 +754,11 @@ footer {
       </button>
     </div>
 
-    <div class="lets-hint">Say <em>"Let's …"</em> to finish!</div>
+    <div class="lets-hint">「<em>レッツ…！</em>」と いって みよう！</div>
     <div class="recognized-text" id="recognized-text" aria-live="polite"><strong>きこえた ことば:</strong> <span id="recognized-value">まだありません。</span></div>
   </section>
 </main>
 
-<footer>
-  <div id="sentence" aria-live="polite" aria-atomic="true">きょうは なにを きる？</div>
-</footer>
 
 <button id="round-reset-overlay" type="button" aria-label="もういちど はじめる" hidden></button>
 
@@ -1705,11 +1672,10 @@ let availableSpeechVoices = [];
 const assignedCharacterVoiceUris = Object.create(null);
 let lastSpeechCommandKey = '';
 let lastSpeechCommandAt = 0;
-let questionBubbleTimeoutId = 0;
 
 const selector = document.getElementById('character-selector');
 const grid = document.getElementById('clothing-grid');
-const sentence = document.getElementById('sentence');
+let sayBubbleTimerId = null;
 const speechBubble = document.getElementById('speech-bubble');
 const characterCanvas = document.getElementById('character-canvas');
 const characterSlot = document.getElementById('character-slot');
@@ -2438,7 +2404,11 @@ function updateMouth(mode = 'auto') {
 }
 
 function say(message) {
-  sentence.textContent = message;
+  window.clearTimeout(sayBubbleTimerId);
+  showBubble(message);
+  sayBubbleTimerId = window.setTimeout(() => {
+    if (!celebrationMode) hideBubble();
+  }, 2500);
 }
 
 function showBubble(message) {
@@ -2451,15 +2421,8 @@ function hideBubble() {
 }
 
 function askWhat() {
-  window.clearTimeout(questionBubbleTimeoutId);
-  showBubble('What?');
   say('What?');
   speak('What?');
-  questionBubbleTimeoutId = window.setTimeout(() => {
-    if (!celebrationMode && speechBubble.textContent === 'What?') {
-      hideBubble();
-    }
-  }, 1400);
 }
 
 function tone(frequency) {
@@ -2679,6 +2642,7 @@ function handleFinish(bubbleText) {
   }
 
   clearQueuedTasks();
+  window.clearTimeout(sayBubbleTimerId);
   celebrationMode = true;
   setInteractionEnabled(false);
   const finishSpeech = bubbleText || buildFinishSpeech();
