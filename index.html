@@ -1726,10 +1726,11 @@ let recognitionRestartId = 0;
 let listeningDeadline = 0;
 let speechStopReason = null;
 let microphonePermissionPrimed = false;
-let keepRecognitionRunning = false;
 let awaitingRoundReset = false;
 let availableSpeechVoices = [];
 const assignedCharacterVoiceUris = Object.create(null);
+let lastSpeechCommandKey = '';
+let lastSpeechCommandAt = 0;
 
 const selector = document.getElementById('character-selector');
 const grid = document.getElementById('clothing-grid');
@@ -1825,39 +1826,37 @@ function initializeSpeechControls() {
 
   recognition = new SpeechRecognitionCtor();
   recognition.lang = 'en-US';
-  recognition.continuous = true;
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 3;
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 5;
 
   recognition.onstart = () => {
     recognitionActive = true;
     microphonePermissionPrimed = true;
-    keepRecognitionRunning = true;
-    if (isListening) {
-      micButton.classList.add('listening');
-      micLabel.textContent = UI_TEXT.listening;
+    micButton.classList.add('listening');
+    micLabel.textContent = UI_TEXT.listening;
+    if (!speechSessionHadResult) {
       recognizedValue.textContent = UI_TEXT.listening;
     }
   };
 
   recognition.onresult = (event) => {
     if (!isListening) { return; }
-    const finalTranscripts = Array.from(event.results)
-      .slice(event.resultIndex)
-      .filter((result) => result.isFinal)
-      .map((result) => result[0]?.transcript?.trim() || '')
-      .filter(Boolean);
+    const results = Array.from(event.results).slice(event.resultIndex);
+    for (const result of results) {
+      const transcripts = getRecognitionTranscripts(result);
+      if (!transcripts.length) {
+        continue;
+      }
 
-    if (!finalTranscripts.length) {
-      return;
+      speechSessionHadResult = true;
+      refreshListeningDeadline();
+      recognizedValue.textContent = transcripts[0];
+      handleSpeechTranscript(transcripts[0], {
+        isFinal: result.isFinal,
+        transcriptAlternatives: transcripts,
+      });
     }
-
-    speechSessionHadResult = true;
-    refreshListeningDeadline();
-    finalTranscripts.forEach((transcript) => {
-      recognizedValue.textContent = transcript;
-      handleSpeechTranscript(transcript);
-    });
   };
 
   recognition.onerror = (event) => {
@@ -1874,17 +1873,24 @@ function initializeSpeechControls() {
       return;
     }
 
+    recognizedValue.textContent = getSpeechErrorMessage(event.error);
+
     if (event.error === 'no-speech') {
+      if (shouldKeepRecognitionAlive()) {
+        scheduleRecognitionRestart(160);
+        return;
+      }
+
+      stopSpeechRecognition({ reason: 'timeout' });
       return;
     }
 
-    if (event.error === 'network' && shouldKeepRecognitionAlive()) {
-      scheduleRecognitionRestart(260);
+    if ((event.error === 'network' || event.error === 'audio-capture') && shouldKeepRecognitionAlive()) {
+      scheduleRecognitionRestart(event.error === 'network' ? 260 : 220);
       return;
     }
 
     speechSessionHandled = true;
-    recognizedValue.textContent = UI_TEXT.tryAgain;
     say(UI_TEXT.tryAgain);
     stopSpeechRecognition({ reason: 'error' });
   };
@@ -1894,11 +1900,6 @@ function initializeSpeechControls() {
 
     if (shouldKeepRecognitionAlive()) {
       scheduleRecognitionRestart(180);
-      return;
-    }
-
-    if (keepRecognitionRunning && !isListening) {
-      try { recognition.start(); } catch (_) {}
       return;
     }
 
@@ -1946,11 +1947,11 @@ function beginSpeechSession() {
   speechSessionHandled = false;
   speechSessionFinalized = false;
   speechStopReason = null;
+  lastSpeechCommandKey = '';
+  lastSpeechCommandAt = 0;
   recognizedValue.textContent = UI_TEXT.listening;
-  if (keepRecognitionRunning) {
-    micButton.classList.add('listening');
-    micLabel.textContent = UI_TEXT.listening;
-  }
+  micButton.classList.add('listening');
+  micLabel.textContent = UI_TEXT.listening;
   refreshListeningDeadline();
   startRecognition();
 }
@@ -2027,10 +2028,10 @@ function stopSpeechRecognition({ reason = 'manual' } = {}) {
   window.clearTimeout(recognitionRestartId);
 
   if (recognitionActive) {
-    if (keepRecognitionRunning) {
-      finalizeSpeechSession();
-    } else {
+    try {
       recognition.stop();
+    } catch (error) {
+      finalizeSpeechSession();
     }
     return;
   }
@@ -2100,32 +2101,79 @@ async function ensureMicrophoneReady() {
   return true;
 }
 
-function handleSpeechTranscript(transcript) {
-  const normalizedTranscript = transcript.trim().toLowerCase();
-  if (!normalizedTranscript) {
+function getRecognitionTranscripts(result) {
+  return Array.from(result)
+    .map((alternative) => alternative?.transcript?.trim() || '')
+    .filter(Boolean);
+}
+
+function getSpeechErrorMessage(errorCode) {
+  switch (errorCode) {
+    case 'no-speech':
+      return 'No speech detected.';
+    case 'audio-capture':
+      return 'No microphone audio detected.';
+    case 'network':
+      return 'Speech service network error.';
+    default:
+      return `Speech error: ${errorCode}`;
+  }
+}
+
+function shouldIgnoreDuplicateSpeechCommand(itemId) {
+  const commandKey = `${currentCharacter}:${itemId}`;
+  const now = Date.now();
+  if (lastSpeechCommandKey === commandKey && now - lastSpeechCommandAt < 1200) {
+    return true;
+  }
+
+  lastSpeechCommandKey = commandKey;
+  lastSpeechCommandAt = now;
+  return false;
+}
+
+function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternatives = [transcript] } = {}) {
+  const candidates = transcriptAlternatives
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const normalizedCandidates = candidates.map((value) => value.toLowerCase());
+
+  if (!normalizedCandidates.length) {
+    if (!isFinal) {
+      return false;
+    }
+
     speechSessionHandled = true;
     recognizedValue.textContent = UI_TEXT.tryAgain;
     say(UI_TEXT.tryAgain);
-    return;
+    return false;
   }
 
-  if (/^let'?s\s+\w+/i.test(normalizedTranscript)) {
-    const display = transcript.trim().charAt(0).toUpperCase() + transcript.trim().slice(1);
+  const finishTranscriptIndex = normalizedCandidates.findIndex((value) => /^let'?s\s+\w+/i.test(value));
+  if (finishTranscriptIndex !== -1) {
+    const display = candidates[finishTranscriptIndex].charAt(0).toUpperCase() + candidates[finishTranscriptIndex].slice(1);
     speechSessionHandled = true;
     handleFinish(display);
-    return;
+    return true;
   }
 
-  const item = findSpeechItem(normalizedTranscript);
-  if (!item || !normalizedTranscript.includes('put on')) {
+  const item = findSpeechItem(normalizedCandidates);
+  if (!item) {
+    if (!isFinal) {
+      return false;
+    }
+
     speechSessionHandled = true;
-    recognizedValue.textContent = transcript.trim();
-    say('What?');
-    if (soundOn) speak('What?');
-    return;
+    recognizedValue.textContent = candidates[0];
+    say(UI_TEXT.tryAgain);
+    return false;
   }
 
   speechSessionHandled = true;
+  if (shouldIgnoreDuplicateSpeechCommand(item.id)) {
+    return true;
+  }
+
   toggleItem(item, { forceState: true, announce: false, audioFeedback: false });
   flashItemButton(item.id);
 
@@ -2134,11 +2182,19 @@ function handleSpeechTranscript(transcript) {
   if (soundOn) {
     tone(680);
   }
+  return true;
 }
 
-function findSpeechItem(transcript) {
-  const match = SPEECH_KEYWORDS.find(({ keywords }) => keywords.some((keyword) => hasKeyword(transcript, keyword)));
-  return match ? ITEM_LOOKUP[match.itemId] : null;
+function findSpeechItem(transcriptOrList) {
+  const transcripts = Array.isArray(transcriptOrList) ? transcriptOrList : [transcriptOrList];
+  for (const transcript of transcripts) {
+    const match = SPEECH_KEYWORDS.find(({ keywords }) => keywords.some((keyword) => hasKeyword(transcript, keyword)));
+    if (match) {
+      return ITEM_LOOKUP[match.itemId];
+    }
+  }
+
+  return null;
 }
 
 function hasKeyword(text, keyword) {
