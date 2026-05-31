@@ -2291,6 +2291,8 @@ function toggleItem(item, options = {}) {
     return;
   }
 
+  speak(item.cardLabel);
+
   const { forceState, announce = true, audioFeedback = true } = options;
   const button = grid.querySelector(`[data-id='${item.id}']`);
   const wearing = worn.has(item.id);
