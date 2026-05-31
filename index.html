@@ -1731,6 +1731,7 @@ let availableSpeechVoices = [];
 const assignedCharacterVoiceUris = Object.create(null);
 let lastSpeechCommandKey = '';
 let lastSpeechCommandAt = 0;
+let questionBubbleTimeoutId = 0;
 
 const selector = document.getElementById('character-selector');
 const grid = document.getElementById('clothing-grid');
@@ -2145,7 +2146,7 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
     speechSessionHandled = true;
     recognizedValue.textContent = UI_TEXT.tryAgain;
-    say(UI_TEXT.tryAgain);
+    askWhat();
     return false;
   }
 
@@ -2169,7 +2170,7 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
     speechSessionHandled = true;
     recognizedValue.textContent = candidates[0];
-    say(UI_TEXT.tryAgain);
+    askWhat();
     return false;
   }
 
@@ -2477,6 +2478,20 @@ function showBubble(message) {
 
 function hideBubble() {
   speechBubble.hidden = true;
+}
+
+function askWhat() {
+  window.clearTimeout(questionBubbleTimeoutId);
+  showBubble('What?');
+  say('What?');
+  if (soundOn) {
+    speak('What?');
+  }
+  questionBubbleTimeoutId = window.setTimeout(() => {
+    if (!celebrationMode && speechBubble.textContent === 'What?') {
+      hideBubble();
+    }
+  }, 1400);
 }
 
 function tone(frequency) {
