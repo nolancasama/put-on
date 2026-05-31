@@ -2151,13 +2151,17 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
 
   const finishTranscriptIndex = normalizedCandidates.findIndex((value) => /^let'?s\s+\w+/i.test(value));
   if (finishTranscriptIndex !== -1) {
+    if (!isFinal) {
+      return false;
+    }
+
     const display = candidates[finishTranscriptIndex].charAt(0).toUpperCase() + candidates[finishTranscriptIndex].slice(1);
     speechSessionHandled = true;
     handleFinish(display);
     return true;
   }
 
-  const item = findSpeechItem(normalizedCandidates);
+  const item = findSpeechCommandItem(normalizedCandidates);
   if (!item) {
     if (!isFinal) {
       return false;
@@ -2183,6 +2187,26 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
     tone(680);
   }
   return true;
+}
+
+function hasSpeechCommandVerb(text) {
+  return /\bput on\b/.test(text) || /\bwear\b/.test(text);
+}
+
+function findSpeechCommandItem(transcriptOrList) {
+  const transcripts = Array.isArray(transcriptOrList) ? transcriptOrList : [transcriptOrList];
+  for (const transcript of transcripts) {
+    if (!hasSpeechCommandVerb(transcript)) {
+      continue;
+    }
+
+    const match = SPEECH_KEYWORDS.find(({ keywords }) => keywords.some((keyword) => hasKeyword(transcript, keyword)));
+    if (match) {
+      return ITEM_LOOKUP[match.itemId];
+    }
+  }
+
+  return null;
 }
 
 function findSpeechItem(transcriptOrList) {
