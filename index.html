@@ -2286,8 +2286,6 @@ function toggleItem(item, options = {}) {
     return;
   }
 
-  speak(item.cardLabel);
-
   const { forceState, announce = true, audioFeedback = true } = options;
   const button = grid.querySelector(`[data-id='${item.id}']`);
   const wearing = worn.has(item.id);
@@ -2319,7 +2317,7 @@ function toggleItem(item, options = {}) {
     }
     if (audioFeedback) {
       tone(360);
-      speak(item.speakTakeOff || item.takeOff);
+      speak(item.cardLabel);
     }
   } else {
     worn.add(item.id);
@@ -2339,7 +2337,7 @@ function toggleItem(item, options = {}) {
     }
     if (audioFeedback) {
       tone(680);
-      speak(item.speakPutOn || item.putOn);
+      speak(item.cardLabel);
     }
   }
 
