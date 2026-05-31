@@ -2457,6 +2457,12 @@ function getRecognitionTranscripts(result) {
     .filter(Boolean);
 }
 
+const PROFANITY_RE = /\b(fuck|f+u+c+k+|sh[i1]t|b[i1]tch|c[o0]ck|d[i1]ck|p[o0]rn|p[u0]ssy|a[s$]+h[o0]le|cunt|n[i1]gg[ae]r|fagg?[o0]t|wh[o0]re|b[a@]st[a@]rd|s[e3]x|ass\b|arse)\b/i;
+
+function containsProfanity(text) {
+  return PROFANITY_RE.test(text);
+}
+
 function getSpeechErrorMessage(errorCode) {
   switch (errorCode) {
     case 'no-speech':
@@ -2493,6 +2499,12 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
       return false;
     }
 
+    speechSessionHandled = true;
+    askWhat();
+    return false;
+  }
+
+  if (isFinal && normalizedCandidates.some(containsProfanity)) {
     speechSessionHandled = true;
     askWhat();
     return false;
