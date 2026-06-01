@@ -2420,9 +2420,13 @@ function updateHint() {
   const hint = document.getElementById('lets-hint');
   if (!hint) return;
   if (worn.size === 0) {
-    hint.innerHTML = '<span class="hint-main">「<em>Put on your …</em>」と いって みよう！</span><div class="hint-sub">🎤 ボタン を おして スタート！</div>';
+    const available = currentCharacter === 'kirby'
+      ? ITEMS.filter(item => item.id !== 'shirt' && item.id !== 'jacket')
+      : ITEMS;
+    const example = available[Math.floor(Math.random() * available.length)];
+    hint.innerHTML = `<span class="hint-main">「<em>${example.speakPutOn}</em>」と いって みよう！</span><div class="hint-sub">🎤 ボタン を おして スタート！</div>`;
   } else {
-    hint.innerHTML = '<span class="hint-main">「<em>レッツ…！</em>」と いって みよう！</span><div class="hint-sub">🎤 ボタン を おして はなそう！</div>';
+    hint.innerHTML = '<span class="hint-main">「<em>レッツ ゴー トゥ スクール！</em>」と いって みよう！</span><div class="hint-sub">🎤 ボタン を おして はなそう！</div>';
   }
 }
 
