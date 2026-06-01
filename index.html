@@ -2606,7 +2606,6 @@ function handleItemCardClick(item) {
   }
 
   flashItemButton(item.id);
-  say(item.cardLabel);
   tone(520);
   speak(item.cardLabel);
 }
@@ -2717,7 +2716,6 @@ function toggleItem(item, options = {}) {
       }
     });
     if (announce) {
-      say(item.takeOff);
     }
     if (audioFeedback) {
       tone(360);
@@ -2737,7 +2735,6 @@ function toggleItem(item, options = {}) {
       }
     });
     if (announce) {
-      say(item.putOn);
     }
     if (audioFeedback) {
       tone(680);
