@@ -2640,12 +2640,14 @@ function renderCharacter() {
 
 function buildCharacterSvg(characterId) {
   const builder = CHARACTER_SVGS[characterId];
-  const viewBox = characterId === 'robot' ? '0 0 220 340' : '0 0 240 340';
-  return `<svg id='character-svg' viewBox='${viewBox}' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>
-    <g id='character-body'>
+  const isRobot = characterId === 'robot';
+  const viewBox = isRobot ? '0 0 259 340' : '0 0 240 340';
+  const inner = `<g id='character-body'>
       ${builder()}
       <g id='sparkle-layer'></g>
-    </g>
+    </g>`;
+  return `<svg id='character-svg' viewBox='${viewBox}' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>
+    ${isRobot ? `<g transform='translate(19.5 0)'>${inner}</g>` : inner}
   </svg>`;
 }
 
