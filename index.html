@@ -2546,8 +2546,6 @@ function handleSpeechTranscript(transcript, { isFinal = true, transcriptAlternat
   toggleItem(item, { forceState: true, announce: false, audioFeedback: false });
   flashItemButton(item.id);
 
-  const successMessage = `いいね！${item.label}を つけたよ。`;
-  say(successMessage);
   tone(680);
   return true;
 }
