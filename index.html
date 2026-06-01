@@ -237,9 +237,15 @@ body {
   position: absolute;
   left: 10px;
   bottom: 8px;
-  width: clamp(200px, 30vw, 300px);
+  width: clamp(160px, min(28vw, calc(62vh * 0.706)), 300px);
   transform: translateX(0);
   z-index: 2;
+}
+
+#character-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .character-bubble {
