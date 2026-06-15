@@ -2439,9 +2439,7 @@ function finalizeSpeechSession() {
   updateHint();
 
   if (speechStopReason === 'timeout') {
-    if (worn.size > 0) {
-      handleFinish();
-    } else if (!speechSessionHadResult && !speechSessionHandled) {
+    if (!speechSessionHadResult && !speechSessionHandled) {
       say(UI_TEXT.tryAgain);
     }
   }
