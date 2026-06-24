@@ -2221,7 +2221,7 @@ function initializeSpeechControls() {
   recognition.lang = 'en-US';
   recognition.continuous = false;
   recognition.interimResults = true;
-  recognition.maxAlternatives = 5;
+  recognition.maxAlternatives = 8;
 
   recognition.onstart = () => {
     recognitionActive = true;
